@@ -1,0 +1,74 @@
+<div class="page" id="add-user" style="display:block;">
+  <div class="form-header">
+    <h2>{% if editing %}Edit User{% else %}Add New User{% endif %}</h2>
+  </div>
+
+  {% if success_message %}
+  <div class="alert alert-success">{{ success_message }}</div>
+  {% endif %}
+  {% if error_message %}
+  <div class="alert alert-error">{{ error_message }}</div>
+  {% endif %}
+
+  <div class="panel form-panel">
+    <form method="post"
+          action="{% if editing %}{% url 'admin_panel:edit_user' edit_user.pk %}{% else %}{% url 'admin_panel:add_user' %}{% endif %}">
+      {% csrf_token %}
+
+      <div class="form-row-3">
+        <div class="form-item">
+          <label>User name</label>
+          <input name="username" placeholder="User name"
+                 value="{{ edit_user.username|default:'' }}"
+                 {% if editing %}readonly{% endif %}
+                 required>
+        </div>
+
+        <div class="form-item">
+          <label>{% if editing %}New Password (leave blank to keep){% else %}Password{% endif %}</label>
+          <input name="password" type="password" placeholder="Password"
+                 {% if not editing %}required{% endif %}>
+        </div>
+
+        <div class="form-item">
+          <label>User Access</label>
+          <select name="role" required>
+            <option value="">-- Select Access --</option>
+            <option value="user" {% if edit_user.role == 'user' %}selected{% endif %}>User</option>
+            <option value="admin" {% if edit_user.role == 'admin' %}selected{% endif %}>Admin</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row-3">
+        <div class="form-item">
+          <label>Department</label>
+          <select name="department">
+            <option value="">-- Select Department --</option>
+            {% for dept in departments %}
+            <option value="{{ dept }}" {% if edit_user.department == dept %}selected{% endif %}>{{ dept }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label>User Status</label>
+          <label class="switch">
+            <input type="checkbox" name="is_active"
+                   {% if edit_user.is_active or not editing %}checked{% endif %}>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="form-item"></div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn green oval large">
+          <i class="fa-solid fa-user-check"></i>
+          {% if editing %}Update User{% else %}Add User{% endif %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

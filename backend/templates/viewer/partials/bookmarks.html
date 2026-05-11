@@ -1,0 +1,17 @@
+{% comment %}User bookmarks list partial.{% endcomment %}
+<div class="dashboard-inner-list">
+  <h3>My Bookmarks</h3>
+  {% for bm in bookmarks %}
+  <div class="bookmark-item">
+    <a href="#"
+       hx-get="{% url 'content:topic_by_xml_id' bm.topic_path %}"
+       hx-target="#content-pane"
+       hx-push-url="true">
+      {{ bm.topic_title|default:bm.topic_path }}
+    </a>
+    <span class="bookmark-date">{{ bm.created_at|date:"M d, Y" }}</span>
+  </div>
+  {% empty %}
+  <p>No bookmarks yet.</p>
+  {% endfor %}
+</div>

@@ -1,0 +1,663 @@
+﻿Subsystem,File,Symbol,Type,Parameters,Returns,Description
+backend,backend/activity/apps.py,ActivityConfig,class,,instance,
+backend,backend/activity/models.py,Meta,class,,instance,
+backend,backend/activity/models.py,UserActivity,class,,instance,Reflects existing 'user_activity' table.
+backend,backend/activity/views.py,add_activity,function,request,,POST /api/activity — log a new activity (no auth).
+backend,backend/activity/views.py,get_activity,function,request; userId,,GET /api/activity/:userId — returns up to 50 activity records (no auth).
+backend,backend/admin_api/views.py,_create_user,function,request,,
+backend,backend/admin_api/views.py,_delete_user,function,id,,
+backend,backend/admin_api/views.py,_get_all_users,function,request,,
+backend,backend/admin_api/views.py,_get_single_user,function,id,,
+backend,backend/admin_api/views.py,_update_user,function,request; id,,
+backend,backend/admin_api/views.py,user_detail,function,request; id,,GET    /api/admin/users/:id
+backend,backend/admin_api/views.py,user_status,function,request; id,,PUT /api/admin/users/:id/status — toggle is_active.
+backend,backend/admin_api/views.py,users_list,function,request,,GET  /api/admin/users — list all users (supports ?search=)
+backend,backend/auth_api/authentication.py,CsrfExemptSessionAuthentication,class,,instance,SessionAuthentication that ignores CSRF check.
+backend,backend/auth_api/authentication.py,enforce_csrf,function,request,,
+backend,backend/auth_api/backends.py,BcryptAuthBackend,class,,instance,Authenticates against existing bcrypt password hashes in the users table.
+backend,backend/auth_api/backends.py,authenticate,function,request; username; password,,
+backend,backend/auth_api/backends.py,get_user,function,user_id,,
+backend,backend/auth_api/models.py,Meta,class,,instance,
+backend,backend/auth_api/models.py,User,class,,instance,Custom user model mapping to the existing 'users' table.
+backend,backend/auth_api/models.py,UserManager,class,,instance,
+backend,backend/auth_api/models.py,create_superuser,function,username; password; **extra_fields,,
+backend,backend/auth_api/models.py,create_user,function,username; password; **extra_fields,,
+backend,backend/auth_api/permissions.py,IsAdminRole,class,,instance,Allow access only to authenticated users with role='admin'.
+backend,backend/auth_api/permissions.py,has_permission,function,request; view,,
+backend,backend/auth_api/utils.py,hash_password,function,plain_password: str,str,Hash a password using bcrypt (rounds=12).
+backend,backend/auth_api/utils.py,verify_password,function,plain_password: str; hashed_password: str,bool,Verify a plain password against a bcrypt hash.
+backend,backend/auth_api/views.py,login,function,request,,POST /api/auth/login
+backend,backend/auth_api/views.py,logout,function,request,,POST /api/auth/logout
+backend,backend/auth_api/views.py,register,function,request,,POST /api/auth/register
+backend,backend/bookmarks/models.py,Bookmark,class,,instance,Reflects existing 'bookmarks' table.
+backend,backend/bookmarks/models.py,Meta,class,,instance,
+backend,backend/bookmarks/views.py,bookmarks_list,function,request,,GET  /api/bookmarks — get all bookmarks for authenticated user
+backend,backend/bookmarks/views.py,delete_bookmark,function,request; id,,DELETE /api/bookmarks/:id — delete bookmark owned by authenticated user.
+backend,backend/content/admin_views.py,_get_departments,function,,,Get distinct departments from users table.
+backend,backend/content/admin_views.py,_is_htmx,function,request,,
+backend,backend/content/admin_views.py,_render,function,request; template; context,,Render partial for HTMX or wrap in base for full-page loads.
+backend,backend/content/admin_views.py,activities,function,request,,
+backend,backend/content/admin_views.py,add_group,function,request,,
+backend,backend/content/admin_views.py,add_user,function,request,,
+backend,backend/content/admin_views.py,admin_required,function,view_func,,Decorator: require authenticated user with admin role.
+backend,backend/content/admin_views.py,dashboard,function,request,,
+backend,backend/content/admin_views.py,edit_user,function,request; pk,,
+backend,backend/content/admin_views.py,group_detail,function,request; pk,,Group detail page with member list.
+backend,backend/content/admin_views.py,list_groups,function,request,,
+backend,backend/content/admin_views.py,list_users,function,request,,
+backend,backend/content/admin_views.py,toggle_user,function,request; pk,,Toggle user active/inactive status.
+backend,backend/content/admin_views.py,user_select,function,request,,User selection panel for adding users to groups.
+backend,backend/content/admin_views.py,wrapper,function,request; *args; **kwargs,,
+backend,backend/content/api_views.py,_block_dict,function,b; leaf_xml_id,,
+backend,backend/content/api_views.py,_doc_order_pks,function,document; navigable_pks,,Return navigable PKs in XML document order via depth-first traversal.
+backend,backend/content/api_views.py,_get_breadcrumbs,function,node,,
+backend,backend/content/api_views.py,_get_prev_next,function,node,,
+backend,backend/content/api_views.py,_serialize_media,function,m,,Serialize a Media instance into the frontend MediaItem shape.
+backend,backend/content/api_views.py,_strip_html,function,text,,
+backend,backend/content/api_views.py,content_documents,function,request,,List all documents (for document switcher / initial load).
+backend,backend/content/api_views.py,content_search,function,request,,"Full-text search across content blocks, media, or nodes."
+backend,backend/content/api_views.py,content_topic,function,request; pk,,"Return full topic content: node metadata, blocks, breadcrumbs, prev/next, media."
+backend,backend/content/api_views.py,content_tree,function,request; doc_id,,Return flat list of all ContentNodes for a document (SPA builds the tree).
+backend,backend/content/api_views.py,document_index,function,request; doc_id,,Return ALL figures and tables for an entire document.
+backend,backend/content/api_views.py,resolve_xref,function,request,,Resolve an xml_id (xref target) to a navigable node PK.
+backend,backend/content/api_views.py,walk,function,pk,,
+backend,backend/content/management/commands/import_xml.py,Command,class,,instance,
+backend,backend/content/management/commands/import_xml.py,_copy_media,function,dest_dir: Path,,Copy media files from XML source directory to MEDIA_ROOT.
+backend,backend/content/management/commands/import_xml.py,_element_text_content,function,el,str,"Get all text content from an element, stripping tags."
+backend,backend/content/management/commands/import_xml.py,_esc,function,text: str,str,Escape HTML special characters.
+backend,backend/content/management/commands/import_xml.py,_esc_attr,function,text: str,str,Escape for HTML attribute values.
+backend,backend/content/management/commands/import_xml.py,_extract_hotspots,function,fig_el; media_obj,,Queue hotspot records from a <figure>'s <hotspots>.
+backend,backend/content/management/commands/import_xml.py,_extract_table_media,function,tbl_el; block,,Create Media records for inline graphics in table cells.
+backend,backend/content/management/commands/import_xml.py,_extract_xrefs_from_element,function,el; node; block_order,,Walk element tree and queue xref records for batch creation.
+backend,backend/content/management/commands/import_xml.py,_import_block,function,el; node: ContentNode; order: int,int,Import a block element. Returns the next order value.
+backend,backend/content/management/commands/import_xml.py,_import_document,function,xml_path: Path; clear: bool; media_dest: str,Document,
+backend,backend/content/management/commands/import_xml.py,_import_global_assets,function,master_path: Path,None,Copy any <global-assets> referenced in master.xml to MEDIA_ROOT/_global/.
+backend,backend/content/management/commands/import_xml.py,_import_leaf,function,el; parent; order,ContentNode,
+backend,backend/content/management/commands/import_xml.py,_import_leaf_from_section,function,el; parent; order,ContentNode,Import a <section> element inside a leaf-group as a LEAF node.
+backend,backend/content/management/commands/import_xml.py,_import_leaf_group,function,el; parent; order,ContentNode,
+backend,backend/content/management/commands/import_xml.py,_import_model3d,function,el; node: ContentNode; order: int,int,Import a <model3d> element: create ContentBlock + Media + MeshHotspot records.
+backend,backend/content/management/commands/import_xml.py,_import_pdf,function,el; node: ContentNode; order: int,int,Import a <pdf> element: create ContentBlock + Media record.
+backend,backend/content/management/commands/import_xml.py,_import_section,function,el; parent; order,ContentNode,
+backend,backend/content/management/commands/import_xml.py,_import_video,function,el; node: ContentNode; order: int,int,Import a <video> element: create ContentBlock + Media record.
+backend,backend/content/management/commands/import_xml.py,_list_html_tag,function,list_type: str,"tuple[str, str]","Return (tag, attrs) for an HTML list based on IETM list type."
+backend,backend/content/management/commands/import_xml.py,_list_to_json,function,el,dict,Convert <list> to a JSON-serializable structure.
+backend,backend/content/management/commands/import_xml.py,_parse_master,function,master_path: Path,list[Path],Parse master.xml and return paths to each ietm_output.xml.
+backend,backend/content/management/commands/import_xml.py,_render_emphasis,function,el,str,"Render <emphasis type=""bold italic underline""> to HTML tags."
+backend,backend/content/management/commands/import_xml.py,_render_figure,function,el; node; order,"tuple[str, Media | None]",Render a <figure> element and create Media record.
+backend,backend/content/management/commands/import_xml.py,_render_inline,function,el,str,"Render inline content (text, emphasis, xref, unresolved) to HTML."
+backend,backend/content/management/commands/import_xml.py,_render_list,function,el,str,Render a <list> element to HTML.
+backend,backend/content/management/commands/import_xml.py,_render_list_item,function,el,str,Render an <item> element to HTML <li>.
+backend,backend/content/management/commands/import_xml.py,_render_para,function,el,str,Render a <para> element to HTML.
+backend,backend/content/management/commands/import_xml.py,_render_table,function,el,str,Render a CALS <table> element to HTML.
+backend,backend/content/management/commands/import_xml.py,_render_table_row,function,row_el; col_count: int,str,Render a CALS <row> to an HTML <tr>.
+backend,backend/content/management/commands/import_xml.py,_resolve_xrefs,function,,,Batch-create CrossReference and Hotspot records with resolved FKs.
+backend,backend/content/management/commands/import_xml.py,_row_to_json,function,row_el,list,
+backend,backend/content/management/commands/import_xml.py,_table_to_json,function,el,dict,Convert CALS <table> to a JSON structure.
+backend,backend/content/management/commands/import_xml.py,add_arguments,function,parser,,
+backend,backend/content/management/commands/import_xml.py,handle,function,*args; **options,,
+backend,backend/content/management/commands/prepare_deployment.py,Command,class,,instance,
+backend,backend/content/management/commands/prepare_deployment.py,_copy_backend,function,dst: Path,,
+backend,backend/content/management/commands/prepare_deployment.py,_log,function,msg: str,,
+backend,backend/content/management/commands/prepare_deployment.py,_package,function,artifact: Path; target: str; master_xml: str; include_wheels,,
+backend,backend/content/management/commands/prepare_deployment.py,_package_docker,function,artifact: Path,,
+backend,backend/content/management/commands/prepare_deployment.py,_package_standalone,function,artifact: Path; include_wheels,,
+backend,backend/content/management/commands/prepare_deployment.py,_phase1,function,inputs; master_xml,,
+backend,backend/content/management/commands/prepare_deployment.py,_phase2,function,target; master_xml; skip_frontend; skip_embeddings; include_wheels,,
+backend,backend/content/management/commands/prepare_deployment.py,_run,function,cmd; cwd: Path; shell_on_windows: bool,,
+backend,backend/content/management/commands/prepare_deployment.py,_write_readme,function,artifact: Path; target: str,,
+backend,backend/content/management/commands/prepare_deployment.py,add_arguments,function,parser,,
+backend,backend/content/management/commands/prepare_deployment.py,handle,function,*args; **opts,,
+backend,backend/content/models.py,ContentBlock,class,,instance,"A content block within a node: paragraph, list, figure, table, or media."
+backend,backend/content/models.py,ContentNode,class,,instance,"Hierarchical node: section, leaf-group, or leaf."
+backend,backend/content/models.py,CrossReference,class,,instance,Resolved cross-reference linking text to a target figure/table/section.
+backend,backend/content/models.py,Document,class,,instance,Top-level IETM document (maps to <ietm> + <identInfo>).
+backend,backend/content/models.py,Hotspot,class,,instance,"Clickable region on an image, linking to a target content node."
+backend,backend/content/models.py,Media,class,,instance,"Media file attached to a content block (image, 3D model, video, PDF)."
+backend,backend/content/models.py,MeshHotspot,class,,instance,"Clickable mesh region on a 3D model, linking to a target content node."
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/models.py,Meta,class,,instance,
+backend,backend/content/views.py,_annotate_tree_nodes,function,qs,,"Annotate tree nodes with has_content, children_exist, and grandchildren_exist flags."
+backend,backend/content/views.py,_get_breadcrumbs,function,node,,Walk up parent chain to build breadcrumb list (root first).
+backend,backend/content/views.py,_get_prev_next,function,node,,Get previous/next navigable nodes by path ordering within the same document.
+backend,backend/content/views.py,_is_htmx,function,request,,
+backend,backend/content/views.py,_strip_html,function,text,,Quick HTML tag removal for search snippets.
+backend,backend/content/views.py,dashboard,function,request,,User dashboard partial.
+backend,backend/content/views.py,document_tree,function,request; doc_id,,Load tree for a specific document (HTMX partial).
+backend,backend/content/views.py,home,function,request,,Home screen partial (HTMX target).
+backend,backend/content/views.py,login_view,function,request,,Session-based login.
+backend,backend/content/views.py,logout_view,function,request,,Logout and redirect to login.
+backend,backend/content/views.py,search,function,request,,Full-text search across content blocks (HTMX partial).
+backend,backend/content/views.py,topic_by_xml_id,function,request; xml_id,,Resolve an xml_id to a topic and redirect/render.
+backend,backend/content/views.py,topic_detail,function,request; pk,,"Single topic/section content. Returns partial for HTMX, full page otherwise."
+backend,backend/content/views.py,tree_children,function,request; pk,,Expand a tree node — return its children (HTMX partial).
+backend,backend/content/views.py,user_bookmarks,function,request,,User bookmarks list (HTMX partial).
+backend,backend/content/views.py,user_notes,function,request,,User notes list (HTMX partial).
+backend,backend/content/views.py,viewer,function,request,,Main viewer page — full page load with tree + home screen.
+backend,backend/content/views_global.py,_find_asset,function,prefix: str,Optional[Path],Return the first file in MEDIA_ROOT/_global/ whose stem equals *prefix*.
+backend,backend/content/views_global.py,abbreviations,function,request,,
+backend,backend/content/views_global.py,prepages,function,request,,
+backend,backend/groups_api/models.py,Department,class,,instance,
+backend,backend/groups_api/models.py,GroupUser,class,,instance,Maps to 'group_users' join table.
+backend,backend/groups_api/models.py,Meta,class,,instance,
+backend,backend/groups_api/models.py,Meta,class,,instance,
+backend,backend/groups_api/models.py,Meta,class,,instance,
+backend,backend/groups_api/models.py,UserGroup,class,,instance,Maps to 'groups' table. Named UserGroup to avoid clash with django.auth.Group.
+backend,backend/groups_api/views.py,_admin_check,function,request,,"Return 403 Response if not admin, None otherwise."
+backend,backend/groups_api/views.py,_create_group,function,request,,
+backend,backend/groups_api/views.py,_delete_group,function,id,,
+backend,backend/groups_api/views.py,_get_all_groups,function,,,
+backend,backend/groups_api/views.py,_get_group_by_id,function,id,,
+backend,backend/groups_api/views.py,_update_group,function,request; id,,
+backend,backend/groups_api/views.py,assign_users,function,request; id,,POST /api/groups/:id/assign — replace all group memberships.
+backend,backend/groups_api/views.py,get_departments,function,request,,GET /api/departments — list all departments (admin only).
+backend,backend/groups_api/views.py,group_detail,function,request; id,,GET    /api/groups/:id — get group with members
+backend,backend/groups_api/views.py,groups_list,function,request,,GET  /api/groups/ — list all groups with user counts
+backend,backend/ietm_backend/serve_spa.py,serve_react,function,request,,
+backend,backend/ietm_backend/views.py,dbtest,function,request,,"GET /dbtest — database connectivity check, no auth."
+backend,backend/ietm_backend/views.py,health,function,request,,"GET /health — simple health check, no auth."
+backend,backend/ietm_backend/views.py,image_hotspots,function,request; imageName,,GET /api/image-hotspots/:imageName — image hotspot data.
+backend,backend/ietm_backend/views.py,model_hotspots,function,request; modelName,,GET /api/model-hotspots/:modelName — 3D model hotspot data.
+backend,backend/ietm_backend/views.py,print_logs,function,request,,"POST /api/printLogs — log a print action (no auth, best-effort)."
+backend,backend/ietm_backend/views.py,protected,function,request,,GET /protected — returns authenticated user info.
+backend,backend/manage.py,main,function,,,Run administrative tasks.
+backend,backend/notes/models.py,Meta,class,,instance,
+backend,backend/notes/models.py,Note,class,,instance,Reflects existing 'notes' table.
+backend,backend/notes/views.py,delete_note_by_topic,function,request; topicId,,DELETE /api/notes/:topicId — delete topic note from dashboard (auth required).
+backend,backend/notes/views.py,note_detail,function,request; userId,,"GET    /api/notes/:userId — get note for user (no auth, legacy)"
+backend,backend/notes/views.py,save_note,function,request,,"GET  /api/notes — get dashboard notes (auth required, checked manually)"
+backend,backend/rag/api_views.py,RagChatView,class,,instance,POST /api/rag/chat/
+backend,backend/rag/api_views.py,_authenticate,function,request,,
+backend,backend/rag/api_views.py,_sse,function,data: dict,str,
+backend,backend/rag/api_views.py,event_stream,function,,,
+backend,backend/rag/api_views.py,post,function,request; *args; **kwargs,,
+backend,backend/rag/embeddings.py,get_embedding,function,text: str,List[float],
+backend,backend/rag/html_utils.py,html_to_text,function,html: str,str,
+backend,backend/rag/llm.py,_build_context_text,function,context_sections: List[Dict],str,
+backend,backend/rag/llm.py,stream_chat,function,user_query: str; context_sections: List[Dict]; chat_history: List[Dict],Iterator[str],Stream response tokens from Ollama chat API.
+backend,backend/rag/management/commands/generate_embeddings.py,Command,class,,instance,
+backend,backend/rag/management/commands/generate_embeddings.py,add_arguments,function,parser,,
+backend,backend/rag/management/commands/generate_embeddings.py,handle,function,*args; **options,,
+backend,backend/rag/pipeline.py,_assemble_context,function,chroma_results: Dict,List[Dict],
+backend,backend/rag/pipeline.py,rag_stream,function,user_query: str; chat_history: List[Dict]; doc_pk: Optional[int],Iterator[Dict],Full RAG pipeline. Yields dicts that api_views.py formats as SSE events.
+backend,backend/rag/vector_store.py,_dir,function,,Path,
+backend,backend/rag/vector_store.py,_get_cache,function,,"Tuple[Optional[np.ndarray], List[Dict]]",
+backend,backend/rag/vector_store.py,_load_from_disk,function,,"Tuple[Optional[np.ndarray], List[Dict]]",
+backend,backend/rag/vector_store.py,_normalise,function,v: np.ndarray,np.ndarray,
+backend,backend/rag/vector_store.py,_save_to_disk,function,entries: List[Dict]; vectors: np.ndarray,None,
+backend,backend/rag/vector_store.py,delete_blocks_for_document,function,doc_pk: int,None,Remove all embeddings that belong to a given document.
+backend,backend/rag/vector_store.py,similarity_search,function,query_embedding: List[float]; top_k: int; doc_pk: Optional[int],Dict,Return top_k most similar blocks to query_embedding.
+backend,backend/rag/vector_store.py,upsert_blocks,function,ids: List[str]; embeddings: List[List[float]]; documents: List[str]; metadatas: List[Dict],None,Insert or replace content block embeddings. Existing entries with matching
+backend,backend/search/models.py,Meta,class,,instance,
+backend,backend/search/models.py,RecentSearch,class,,instance,Reflects existing 'recent_searches' table.
+backend,backend/search/views.py,add_search,function,request,,POST /api/search — record a new search term (no auth).
+backend,backend/search/views.py,get_recent_searches,function,request; userId,,GET /api/search/:userId — returns up to 50 recent searches (no auth).
+backend,backend/topic_notes/models.py,Meta,class,,instance,
+backend,backend/topic_notes/models.py,TopicNote,class,,instance,Model for topic-specific notes.
+backend,backend/topic_notes/views.py,_get_all_topic_notes,function,request,,
+backend,backend/topic_notes/views.py,_save_topic_note,function,request,,
+backend,backend/topic_notes/views.py,topic_note_detail,function,request; topicId,,GET    /api/topic-notes/:topicId — get note for a specific topic
+backend,backend/topic_notes/views.py,topic_notes_list,function,request,,GET  /api/topic-notes — get all topic notes for authenticated user
+frontend,frontend/src/app/App.tsx,App,component,,JSX.Element,React component rendering App UI
+frontend,frontend/src/app/App.tsx,handleBookmarks,function,,,Event handler for Bookmarks action
+frontend,frontend/src/app/App.tsx,handleDashboard,function,,,Event handler for Dashboard action
+frontend,frontend/src/app/App.tsx,handleDeleteBookmark,function,id: string,,Event handler for DeleteBookmark action
+frontend,frontend/src/app/App.tsx,handleDeleteNote,function,id: string,,Event handler for DeleteNote action
+frontend,frontend/src/app/App.tsx,handleDocumentCardClick,function,docId: string,,Event handler for DocumentCardClick action
+frontend,frontend/src/app/App.tsx,handleEditNote,function,id: string,,Event handler for EditNote action
+frontend,frontend/src/app/App.tsx,handleHelp,function,,,Event handler for Help action
+frontend,frontend/src/app/App.tsx,handleHistoryNext,function,,,Event handler for HistoryNext action
+frontend,frontend/src/app/App.tsx,handleHistoryPrev,function,,,Event handler for HistoryPrev action
+frontend,frontend/src/app/App.tsx,handleHome,function,,,Event handler for Home action
+frontend,frontend/src/app/App.tsx,handleLogicalNext,function,,,Event handler for LogicalNext action
+frontend,frontend/src/app/App.tsx,handleLogicalPrev,function,,,Event handler for LogicalPrev action
+frontend,frontend/src/app/App.tsx,handleLogout,function,,,Event handler for Logout action
+frontend,frontend/src/app/App.tsx,handleNotes,function,,,Event handler for Notes action
+frontend,frontend/src/app/App.tsx,handleSaveNote,function,content: string,,Event handler for SaveNote action
+frontend,frontend/src/app/App.tsx,handleSearch,function,"query: string, mode: string = ""text""",Promise<SearchResult[]>,Event handler for Search action
+frontend,frontend/src/app/App.tsx,handleViewBookmarksFromDashboard,function,,,Event handler for ViewBookmarksFromDashboard action
+frontend,frontend/src/app/App.tsx,handleViewNotesFromDashboard,function,,,Event handler for ViewNotesFromDashboard action
+frontend,frontend/src/app/App.tsx,loadInitialData,function,,,Function: loadInitialData
+frontend,frontend/src/app/LoginPage.tsx,LoginPage,component,,JSX.Element,React component rendering LoginPage UI
+frontend,frontend/src/app/LoginPage.tsx,handleSubmit,function,e: FormEvent,,Event handler for Submit action
+frontend,frontend/src/app/PrivateRoute.tsx,AdminRoute,component,{ children }: { children: ReactNode },JSX.Element,React component rendering AdminRoute UI
+frontend,frontend/src/app/PrivateRoute.tsx,PrivateRoute,component,{ children }: { children: ReactNode },JSX.Element,React component rendering PrivateRoute UI
+frontend,frontend/src/app/components/AbbreviationsDialog.tsx,AbbreviationsDialog,component,"{ open, onClose }: AbbreviationsDialogProps",JSX.Element,React component rendering AbbreviationsDialog UI
+frontend,frontend/src/app/components/AbbreviationsDialog.tsx,AbbreviationsDialogProps,interface,open: boolean; onClose:,TypeScript interface,Interface defining shape of AbbreviationsDialogProps objects
+frontend,frontend/src/app/components/BookmarksDialog.tsx,BookmarksDialog,component,"{ isOpen, onClose, bookmarks, onDeleteBookmark, }: BookmarksDialogProps",JSX.Element,React component rendering BookmarksDialog UI
+frontend,frontend/src/app/components/BookmarksDialog.tsx,BookmarksDialogProps,interface,isOpen: boolean; onClose: ; bookmarks: Array<; id: string; title: string; path: string; date: string,TypeScript interface,Interface defining shape of BookmarksDialogProps objects
+frontend,frontend/src/app/components/ChatPanel.tsx,ChatPanel,component,"{ currentDocPk, currentDocTitle, onNavigateToNode, }: ChatPanelProps",JSX.Element,React component rendering ChatPanel UI
+frontend,frontend/src/app/components/ChatPanel.tsx,ChatPanelProps,interface,currentDocPk: number | null; currentDocTitle: string; onNavigateToNode: ; nodePk: number,TypeScript interface,Interface defining shape of ChatPanelProps objects
+frontend,frontend/src/app/components/ChatPanel.tsx,DisplayMessage,interface,id: string; role: ; content: string; sources: SourceCitation[]; isStreaming: boolean,TypeScript interface,Interface defining shape of DisplayMessage objects
+frontend,frontend/src/app/components/ChatPanel.tsx,MessageBubble,component,"{ message, onNavigateToNode }: MessageBubbleProps",JSX.Element,React component rendering MessageBubble UI
+frontend,frontend/src/app/components/ChatPanel.tsx,MessageBubbleProps,interface,message: DisplayMessage; onNavigateToNode: ; nodePk: number,TypeScript interface,Interface defining shape of MessageBubbleProps objects
+frontend,frontend/src/app/components/ChatPanel.tsx,handleClear,function,,,Event handler for Clear action
+frontend,frontend/src/app/components/ChatPanel.tsx,handleKeyDown,function,e: React.KeyboardEvent<HTMLTextAreaElement>,,Event handler for KeyDown action
+frontend,frontend/src/app/components/ContentArea.tsx,ContentArea,component,"{ blocks, topicId, onNavigateWithAnchor, onSearchResultClick, onHotspotClick, pendingAnchor, pendingSearchQuery, pendingMediaXmlId }: ContentAreaProps",JSX.Element,React component rendering ContentArea UI
+frontend,frontend/src/app/components/ContentArea.tsx,ContentAreaProps,interface,"blocks: ContentBlock[]; topicId: number; onNavigateWithAnchor: ; nodeId: number, anchorId; onSearchResultClick: ; nodeId: number; onHotspotClick: ; nodeId: number, sourceMediaXmlId?",TypeScript interface,Interface defining shape of ContentAreaProps objects
+frontend,frontend/src/app/components/ContentArea.tsx,handleCloseLocalSearch,function,,,Event handler for CloseLocalSearch action
+frontend,frontend/src/app/components/ContentArea.tsx,handleKeyDown,function,e: KeyboardEvent,,Event handler for KeyDown action
+frontend,frontend/src/app/components/ContentArea.tsx,handleLocalNext,function,,,Event handler for LocalNext action
+frontend,frontend/src/app/components/ContentArea.tsx,handleLocalPrev,function,,,Event handler for LocalPrev action
+frontend,frontend/src/app/components/ContentArea.tsx,handleLocalSearchChange,function,query: string,,Event handler for LocalSearchChange action
+frontend,frontend/src/app/components/ContentArea.tsx,highlightActiveMatch,function,index: number,,Function: highlightActiveMatch
+frontend,frontend/src/app/components/ContentArea.tsx,navigateWithAnchor,function,"nodeId: number, anchorId: string",,Function: navigateWithAnchor
+frontend,frontend/src/app/components/Dashboard.tsx,Dashboard,component,"{ isOpen, onClose, username, bookmarks, notes, onDeleteBookmark, onDeleteNote, onEditNote, onViewBookmarks, onViewNotes, }: DashboardProps",JSX.Element,React component rendering Dashboard UI
+frontend,frontend/src/app/components/Dashboard.tsx,DashboardProps,interface,isOpen: boolean; onClose: ; username: string; bookmarks: Array<; id: string; title: string; path: string; date: string,TypeScript interface,Interface defining shape of DashboardProps objects
+frontend,frontend/src/app/components/DocumentIndexPage.tsx,DocumentIndexPage,component,"{ docId, mode, onNavigate }: DocumentIndexPageProps",JSX.Element,React component rendering DocumentIndexPage UI
+frontend,frontend/src/app/components/DocumentIndexPage.tsx,DocumentIndexPageProps,interface,"docId: string; mode: ; onNavigate: ; nodeId: number, anchorId",TypeScript interface,Interface defining shape of DocumentIndexPageProps objects
+frontend,frontend/src/app/components/Header.tsx,BreadcrumbEntry,interface,id: number; title: string,TypeScript interface,Interface defining shape of BreadcrumbEntry objects
+frontend,frontend/src/app/components/Header.tsx,Header,component,"{ breadcrumbs, onLogicalPrev, onLogicalNext, onHistoryPrev, onHistoryNext, canGoBack, canGoForward, canLogicalPrev, canLogicalNext, onBreadcrumbClick, onSearch, onSearchResultClick, onClearSearch, }:",JSX.Element,React component rendering Header UI
+frontend,frontend/src/app/components/Header.tsx,HeaderProps,interface,breadcrumbs: BreadcrumbEntry[]; onLogicalPrev: ; onLogicalNext: ; onHistoryPrev: ; onHistoryNext: ; canGoBack: boolean; canGoForward: boolean; canLogicalPrev: boolean,TypeScript interface,Interface defining shape of HeaderProps objects
+frontend,frontend/src/app/components/Header.tsx,clearSearch,function,,,Function: clearSearch
+frontend,frontend/src/app/components/Header.tsx,handleClickOutside,function,event: MouseEvent,,Event handler for ClickOutside action
+frontend,frontend/src/app/components/Header.tsx,handleSearch,function,,,Event handler for Search action
+frontend,frontend/src/app/components/HelpDialog.tsx,HelpDialog,component,"{ isOpen, onClose }: HelpDialogProps",JSX.Element,React component rendering HelpDialog UI
+frontend,frontend/src/app/components/HelpDialog.tsx,HelpDialogProps,interface,isOpen: boolean; onClose:,TypeScript interface,Interface defining shape of HelpDialogProps objects
+frontend,frontend/src/app/components/HomeScreen.tsx,DemoItem,type_alias,typeof DEMO_ITEMS[number],TypeScript type,Type alias for DemoItem
+frontend,frontend/src/app/components/HomeScreen.tsx,HomeScreen,component,"{ documents, onDocumentClick, onSearch, onSearchResultClick, }: HomeScreenProps",JSX.Element,React component rendering HomeScreen UI
+frontend,frontend/src/app/components/HomeScreen.tsx,HomeScreenProps,interface,"documents: DocumentInfo[]; onDocumentClick: ; docId: string; onSearch: ; query: string, mode; onSearchResultClick: ; nodeId: number, anchorId?",TypeScript interface,Interface defining shape of HomeScreenProps objects
+frontend,frontend/src/app/components/HomeScreen.tsx,MediaDemoModal,component,"{ item, onClose, onSearch, onNavigate, }: { item: DemoItem; onClose: (",JSX.Element,React component rendering MediaDemoModal UI
+frontend,frontend/src/app/components/HomeScreen.tsx,handleInputChange,function,value: string,,Event handler for InputChange action
+frontend,frontend/src/app/components/HomeScreen.tsx,handleResultClick,function,"nodeId: number, anchorId?: string",,Event handler for ResultClick action
+frontend,frontend/src/app/components/HomeScreen.tsx,handler,function,e: MouseEvent,,Event handler for r action
+frontend,frontend/src/app/components/KnowledgeTreeView.tsx,KnowledgeTreeView,component,"{ docId, tocItems, documents, onLeafClick, onBack, }: KnowledgeTreeViewProps",JSX.Element,React component rendering KnowledgeTreeView UI
+frontend,frontend/src/app/components/KnowledgeTreeView.tsx,KnowledgeTreeViewProps,interface,docId: string; tocItems: TocItem[]; documents: DocumentInfo[]; onLeafClick: ; id: string; onBack:,TypeScript interface,Interface defining shape of KnowledgeTreeViewProps objects
+frontend,frontend/src/app/components/KnowledgeTreeView.tsx,handleRecenter,function,,,Event handler for Recenter action
+frontend,frontend/src/app/components/KnowledgeTreeView.tsx,handleZoomIn,function,,,Event handler for ZoomIn action
+frontend,frontend/src/app/components/KnowledgeTreeView.tsx,handleZoomOut,function,,,Event handler for ZoomOut action
+frontend,frontend/src/app/components/LeftPanel.tsx,LeftPanel,component,"{ isSidebarOpen, onToggleSidebar, onNotes, onBookmarks, onHelp, onDashboard, onHome, onLogout, onAbbreviations, isAdmin = false, }: LeftPanelProps",JSX.Element,React component rendering LeftPanel UI
+frontend,frontend/src/app/components/LeftPanel.tsx,LeftPanelProps,interface,isSidebarOpen: boolean; onToggleSidebar: ; onNotes: ; onBookmarks: ; onHelp: ; onDashboard: ; onHome: ; onLogout:,TypeScript interface,Interface defining shape of LeftPanelProps objects
+frontend,frontend/src/app/components/MediaFullscreen.tsx,MediaFullscreen,component,"{ src, title, type, hotspots, onHotspotClick, resolveXref, sourceMediaXmlId, }: MediaFullscreenProps",JSX.Element,React component rendering MediaFullscreen UI
+frontend,frontend/src/app/components/MediaFullscreen.tsx,MediaFullscreenProps,interface,"src: string; title: string; type: ; hotspots: Hotspot[]; onHotspotClick: ; nodeId: number, sourceMediaXmlId?; resolveXref: ; xmlId: string",TypeScript interface,Interface defining shape of MediaFullscreenProps objects
+frontend,frontend/src/app/components/MediaFullscreen.tsx,beginPan,function,e: React.PointerEvent,,Function: beginPan
+frontend,frontend/src/app/components/MediaFullscreen.tsx,close,function,,,Function: close
+frontend,frontend/src/app/components/MediaFullscreen.tsx,endPan,function,e: React.PointerEvent,,Function: endPan
+frontend,frontend/src/app/components/MediaFullscreen.tsx,handlePan,function,e: React.PointerEvent,,Event handler for Pan action
+frontend,frontend/src/app/components/MediaFullscreen.tsx,handleZoomIn,function,,,Event handler for ZoomIn action
+frontend,frontend/src/app/components/MediaFullscreen.tsx,handleZoomOut,function,,,Event handler for ZoomOut action
+frontend,frontend/src/app/components/MediaFullscreen.tsx,onKey,function,e: KeyboardEvent,,Callback for Key event
+frontend,frontend/src/app/components/MediaFullscreen.tsx,resetView,function,,,Function: resetView
+frontend,frontend/src/app/components/ModelViewer3D.tsx,AssemblyScene,component,"{ url, explodeAmount, meshHotspots, onHotspotClick, selectedMesh, onSelectMesh, refitRef, }: { url: string; explodeAmount: number; meshHotspots?: MeshHotspot[]; onHotspotClick?: (hs: MeshHotspot, idx:",JSX.Element,React component rendering AssemblyScene UI
+frontend,frontend/src/app/components/ModelViewer3D.tsx,CameraSetup,component,"{ meshInfos, refitRef, }: { meshInfos: MeshInfo[]; refitRef: React.MutableRefObject<(",JSX.Element,React component rendering CameraSetup UI
+frontend,frontend/src/app/components/ModelViewer3D.tsx,LoadingFallback,component,,JSX.Element,React component rendering LoadingFallback UI
+frontend,frontend/src/app/components/ModelViewer3D.tsx,MeshInfo,interface,name: string; displayName: string; geometry: THREE.BufferGeometry; originalMaterial: THREE.Material | THREE.Material[]; hoverMaterial: THREE.MeshStandardMaterial; highlightMaterial: THREE.MeshStandardMaterial; worldPosition: THREE.Vector3; worldQuaternion: THREE.Quaternion,TypeScript interface,Interface defining shape of MeshInfo objects
+frontend,frontend/src/app/components/ModelViewer3D.tsx,ModelViewer3D,component,"{ url, meshHotspots, onHotspotClick, autoRotate = true, }: ModelViewer3DProps",JSX.Element,React component rendering ModelViewer3D UI
+frontend,frontend/src/app/components/ModelViewer3D.tsx,ModelViewer3DProps,interface,"url: string; meshHotspots: MeshHotspot[]; onHotspotClick: ; hs: MeshHotspot, meshIndex; autoRotate: boolean",TypeScript interface,Interface defining shape of ModelViewer3DProps objects
+frontend,frontend/src/app/components/ModelViewer3D.tsx,cleanName,function,raw: string,string,Function: cleanName
+frontend,frontend/src/app/components/ModelViewer3D.tsx,handleClick,function,e: { stopPropagation: (,,Event handler for Click action
+frontend,frontend/src/app/components/NotepadDialog.tsx,NotepadDialog,component,"{ isOpen, onClose, onSave, initialContent = """", currentTopic }: NotepadDialogProps",JSX.Element,React component rendering NotepadDialog UI
+frontend,frontend/src/app/components/NotepadDialog.tsx,NotepadDialogProps,interface,isOpen: boolean; onClose: ; onSave: ; content: string; initialContent: string; currentTopic: ; title: string; path: string,TypeScript interface,Interface defining shape of NotepadDialogProps objects
+frontend,frontend/src/app/components/NotepadDialog.tsx,handleClose,function,,,Event handler for Close action
+frontend,frontend/src/app/components/NotepadDialog.tsx,handleSave,function,,,Event handler for Save action
+frontend,frontend/src/app/components/NotesListDialog.tsx,NotesListDialog,component,"{ isOpen, onClose, notes, onDeleteNote, onEditNote, }: NotesListDialogProps",JSX.Element,React component rendering NotesListDialog UI
+frontend,frontend/src/app/components/NotesListDialog.tsx,NotesListDialogProps,interface,isOpen: boolean; onClose: ; notes: Array<; id: string; content: string; date: string; topic: string; topicPath: string,TypeScript interface,Interface defining shape of NotesListDialogProps objects
+frontend,frontend/src/app/components/PrepagesViewer.tsx,PrepagesViewer,component,"{ open, onClose, url, title }: PrepagesViewerProps",JSX.Element,React component rendering PrepagesViewer UI
+frontend,frontend/src/app/components/PrepagesViewer.tsx,PrepagesViewerProps,interface,open: boolean; onClose: ; url: string; title: string,TypeScript interface,Interface defining shape of PrepagesViewerProps objects
+frontend,frontend/src/app/components/Sidebar.tsx,Sidebar,component,"{ isOpen, tocItems, onItemClick, activeItemId }: SidebarProps",JSX.Element,React component rendering Sidebar UI
+frontend,frontend/src/app/components/Sidebar.tsx,SidebarProps,interface,isOpen: boolean; tocItems: TocItem[]; onItemClick: ; id: string; activeItemId: string,TypeScript interface,Interface defining shape of SidebarProps objects
+frontend,frontend/src/app/components/Sidebar.tsx,TocNode,component,"{ item, onItemClick, level = 0, activeId, expandedIds }: { item: TocItem; onItemClick: (id: string",JSX.Element,React component rendering TocNode UI
+frontend,frontend/src/app/components/Sidebar.tsx,findAncestorIds,function,"items: TocItem[], targetId: string",Set<string>,Function: findAncestorIds
+frontend,frontend/src/app/components/Sidebar.tsx,handleClick,function,,,Event handler for Click action
+frontend,frontend/src/app/components/Sidebar.tsx,walk,function,"nodes: TocItem[], ancestors: string[]",boolean,Function: walk
+frontend,frontend/src/app/components/StatusBar.tsx,StatusBar,component,"{ username, userRole, currentPage, totalPages }: StatusBarProps",JSX.Element,React component rendering StatusBar UI
+frontend,frontend/src/app/components/StatusBar.tsx,StatusBarProps,interface,username: string; userRole: string; currentPage: number; totalPages: number,TypeScript interface,Interface defining shape of StatusBarProps objects
+frontend,frontend/src/app/components/TopBar.tsx,TopBar,component,"{ docTitle, username, userRole, classification }: TopBarProps",JSX.Element,React component rendering TopBar UI
+frontend,frontend/src/app/components/TopBar.tsx,TopBarProps,interface,docTitle: string; username: string; userRole: string; classification: string,TypeScript interface,Interface defining shape of TopBarProps objects
+frontend,frontend/src/app/components/TopBar.tsx,toggleLanguage,function,,,Function: toggleLanguage
+frontend,frontend/src/app/components/figma/ImageWithFallback.tsx,ImageWithFallback,component,props: React.ImgHTMLAttributes<HTMLImageElement>,JSX.Element,React component rendering ImageWithFallback UI
+frontend,frontend/src/app/components/figma/ImageWithFallback.tsx,handleError,function,,,Event handler for Error action
+frontend,frontend/src/app/components/knowledge-tree/TreeCanvas.tsx,TreeCanvas,component,"{ nodes, expandedNodes, onToggle, onLeafClick, accentColor, transform, onTransformChange, }: TreeCanvasProps",JSX.Element,React component rendering TreeCanvas UI
+frontend,frontend/src/app/components/knowledge-tree/TreeCanvas.tsx,TreeCanvasProps,interface,"nodes: Map<string, LayoutNode>; expandedNodes: Set<string>; onToggle: ; id: string; onLeafClick: ; id: string; accentColor: string; transform:",TypeScript interface,Interface defining shape of TreeCanvasProps objects
+frontend,frontend/src/app/components/knowledge-tree/TreeConnectors.tsx,TreeConnectors,component,"{ nodes, accentColor }: TreeConnectorsProps",JSX.Element,React component rendering TreeConnectors UI
+frontend,frontend/src/app/components/knowledge-tree/TreeConnectors.tsx,TreeConnectorsProps,interface,"nodes: Map<string, LayoutNode>; accentColor: string",TypeScript interface,Interface defining shape of TreeConnectorsProps objects
+frontend,frontend/src/app/components/knowledge-tree/TreeNode.tsx,TreeNode,component,"{ node, isExpanded, onToggle, onLeafClick, accentColor, index, }: TreeNodeProps",JSX.Element,React component rendering TreeNode UI
+frontend,frontend/src/app/components/knowledge-tree/TreeNode.tsx,TreeNodeProps,interface,node: LayoutNode; isExpanded: boolean; onToggle: ; id: string; onLeafClick: ; id: string; accentColor: string; index: number,TypeScript interface,Interface defining shape of TreeNodeProps objects
+frontend,frontend/src/app/components/knowledge-tree/TreeNode.tsx,handleClick,function,,,Event handler for Click action
+frontend,frontend/src/app/components/knowledge-tree/types.ts,LayoutNode,interface,id: string; title: string; nodeType: TocItem[; x: number; y: number; width: number; height: number; depth: number,TypeScript interface,Interface defining shape of LayoutNode objects
+frontend,frontend/src/app/components/knowledge-tree/useTreeLayout.ts,layout,function,"item: TocItem, depth: number, parentId: string | null",LayoutNode,Function: layout
+frontend,frontend/src/app/components/knowledge-tree/useTreeLayout.ts,useTreeLayout,function,"root: TocItem | null, expandedNodes: Set<string>,","Map<string, LayoutNode>",Custom hook providing TreeLayout state/logic
+frontend,frontend/src/app/pages/AdminLayout.tsx,AdminLayout,component,,JSX.Element,React component rendering AdminLayout UI
+frontend,frontend/src/app/pages/admin/GroupsPage.tsx,GroupFormData,type_alias,{ name: string,TypeScript type,Type alias for GroupFormData
+frontend,frontend/src/app/pages/admin/GroupsPage.tsx,GroupsPage,component,,JSX.Element,React component rendering GroupsPage UI
+frontend,frontend/src/app/pages/admin/GroupsPage.tsx,handleDelete,function,group: Group,,Event handler for Delete action
+frontend,frontend/src/app/pages/admin/GroupsPage.tsx,handleSave,function,,,Event handler for Save action
+frontend,frontend/src/app/pages/admin/GroupsPage.tsx,openCreate,function,,,Function: openCreate
+frontend,frontend/src/app/pages/admin/GroupsPage.tsx,openEdit,function,group: Group,,Function: openEdit
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,UserFormData,type_alias,{   username: string,TypeScript type,Type alias for UserFormData
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,UsersPage,component,,JSX.Element,React component rendering UsersPage UI
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,handleDelete,function,user: AdminUser,,Event handler for Delete action
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,handleSave,function,,,Event handler for Save action
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,handleSearch,function,e: React.ChangeEvent<HTMLInputElement>,,Event handler for Search action
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,handleSearchSubmit,function,e: React.FormEvent,,Event handler for SearchSubmit action
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,handleToggleStatus,function,user: AdminUser,,Event handler for ToggleStatus action
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,openCreate,function,,,Function: openCreate
+frontend,frontend/src/app/pages/admin/UsersPage.tsx,openEdit,function,user: AdminUser,,Function: openEdit
+frontend,frontend/src/context/AuthContext.tsx,AuthContextValue,interface,"user: AuthUser | null; token: string | null; isLoading: boolean; login: ; username: string, password; logout:",TypeScript interface,Interface defining shape of AuthContextValue objects
+frontend,frontend/src/context/AuthContext.tsx,AuthProvider,component,{ children }: { children: ReactNode },JSX.Element,React component rendering AuthProvider UI
+frontend,frontend/src/context/AuthContext.tsx,handle,function,,,Context provider/hook for authcontext state
+frontend,frontend/src/context/AuthContext.tsx,useAuth,function,,AuthContextValue,Custom hook providing Auth state/logic
+frontend,frontend/src/context/NetworkContext.tsx,NetworkContextValue,interface,isOnline: boolean,TypeScript interface,Interface defining shape of NetworkContextValue objects
+frontend,frontend/src/context/NetworkContext.tsx,NetworkProvider,component,{ children }: { children: ReactNode },JSX.Element,React component rendering NetworkProvider UI
+frontend,frontend/src/context/NetworkContext.tsx,useNetwork,function,,,Custom hook providing Network state/logic
+frontend,frontend/src/context/ThemeContext.tsx,ThemeContextValue,interface,currentTheme: ThemePreset; setTheme: ; id: string; themes: ThemePreset[],TypeScript interface,Interface defining shape of ThemeContextValue objects
+frontend,frontend/src/context/ThemeContext.tsx,ThemeProvider,component,{ children }: { children: ReactNode },JSX.Element,React component rendering ThemeProvider UI
+frontend,frontend/src/context/ThemeContext.tsx,applyTheme,function,theme: ThemePreset,,Context provider/hook for themecontext state
+frontend,frontend/src/context/ThemeContext.tsx,setTheme,function,id: string,,Context provider/hook for themecontext state
+frontend,frontend/src/context/ThemeContext.tsx,useTheme,function,,,Custom hook providing Theme state/logic
+frontend,frontend/src/lib/apiClient.ts,ApiError,class,,instance,Class: ApiError
+frontend,frontend/src/lib/apiClient.ts,buildHeaders,function,body?: unknown,HeadersInit,Function: buildHeaders
+frontend,frontend/src/lib/apiClient.ts,getToken,function,,string | null,Fetches ken data from API
+frontend,frontend/src/lib/apiClient.ts,handleResponse,function,res: Response,Promise<T>,Event handler for Response action
+frontend,frontend/src/lib/db.ts,IETMSchema,interface,toc: ; key: string; value: TocItem[],TypeScript interface,Interface defining shape of IETMSchema objects
+frontend,frontend/src/lib/db.ts,PendingSyncAction,type_alias,"| { type: ""bookmark_add""",TypeScript type,Type alias for PendingSyncAction
+frontend,frontend/src/lib/db.ts,PendingSyncEntry,interface,id: number; action: PendingSyncAction; createdAt: number,TypeScript interface,Interface defining shape of PendingSyncEntry objects
+frontend,frontend/src/lib/db.ts,getDb,function,,Promise<IDBPDatabase<IETMSchema>>,Fetches Db data from API
+frontend,frontend/src/lib/syncQueue.ts,drainSyncQueue,function,,Promise<void>,Function: drainSyncQueue
+frontend,frontend/src/lib/syncQueue.ts,registerSyncListeners,function,,void,Function: registerSyncListeners
+frontend,frontend/src/lib/types.ts,AdminUser,interface,id: number; username: string; role: ; department: string | null; is_active: boolean,TypeScript interface,Interface defining shape of AdminUser objects
+frontend,frontend/src/lib/types.ts,AuthUser,interface,id: number; username: string; role: ; department: string | null,TypeScript interface,Interface defining shape of AuthUser objects
+frontend,frontend/src/lib/types.ts,Bookmark,interface,id: string; title: string; path: string; date: string,TypeScript interface,Interface defining shape of Bookmark objects
+frontend,frontend/src/lib/types.ts,BreadcrumbItem,interface,id: number; title: string,TypeScript interface,Interface defining shape of BreadcrumbItem objects
+frontend,frontend/src/lib/types.ts,ChapterIndex,interface,figures: ChapterIndexFigure[]; tables: ChapterIndexTable[],TypeScript interface,Interface defining shape of ChapterIndex objects
+frontend,frontend/src/lib/types.ts,ChapterIndexFigure,interface,xmlId: string; number: string; title: string; nodeId: number; nodeTitle: string,TypeScript interface,Interface defining shape of ChapterIndexFigure objects
+frontend,frontend/src/lib/types.ts,ChapterIndexTable,interface,xmlId: string; number: string; title: string; nodeId: number; nodeTitle: string,TypeScript interface,Interface defining shape of ChapterIndexTable objects
+frontend,frontend/src/lib/types.ts,ContentBlock,interface,blockType: string; contentHtml: string; blockId: number | null; xmlId: string; media: MediaItem | null; leafXmlId: string,TypeScript interface,Interface defining shape of ContentBlock objects
+frontend,frontend/src/lib/types.ts,Group,interface,id: number; name: string; description: string,TypeScript interface,Interface defining shape of Group objects
+frontend,frontend/src/lib/types.ts,Hotspot,interface,x: number; y: number; width: number; height: number; label: string; targetNodeId: number | null; targetXmlId: string,TypeScript interface,Interface defining shape of Hotspot objects
+frontend,frontend/src/lib/types.ts,MediaItem,interface,id: number; type: ; url: string; title: string; xmlId: string; hotspots: Hotspot[]; meshHotspots: MeshHotspot[],TypeScript interface,Interface defining shape of MediaItem objects
+frontend,frontend/src/lib/types.ts,MeshHotspot,interface,meshName: string; targetNodeId: number | null; targetXmlId: string; text: string,TypeScript interface,Interface defining shape of MeshHotspot objects
+frontend,frontend/src/lib/types.ts,Note,interface,id: string; content: string; date: string; topic: string; topicPath: string,TypeScript interface,Interface defining shape of Note objects
+frontend,frontend/src/lib/types.ts,SearchResult,interface,nodeId: number; nodeTitle: string; snippet: string; anchorId: string,TypeScript interface,Interface defining shape of SearchResult objects
+frontend,frontend/src/lib/types.ts,TocItem,interface,id: string; parentId: string | null; title: string; nodeType: ; level: number; order: number; path: string; hasContent: boolean,TypeScript interface,Interface defining shape of TocItem objects
+frontend,frontend/src/lib/types.ts,TopicContent,interface,node: ; id: number; title: string; number: string; nodeType: string; path: string,TypeScript interface,Interface defining shape of TopicContent objects
+frontend,frontend/src/services/activityService.ts,getUserId,function,,string | null,Service object exposing activityservice API methods
+frontend,frontend/src/services/authService.ts,LoginResponse,interface,success: boolean; token: string; user: AuthUser,TypeScript interface,Interface defining shape of LoginResponse objects
+frontend,frontend/src/services/authService.ts,clearAuthStorage,function,,,Service object exposing authservice API methods
+frontend,frontend/src/services/bookmarkService.ts,ApiBookmark,interface,id: number; user_id: number; topic_title: string; topic_path: string; created_at: string | null,TypeScript interface,Interface defining shape of ApiBookmark objects
+frontend,frontend/src/services/bookmarkService.ts,adapt,function,b: ApiBookmark,Bookmark,Service object exposing bookmarkservice API methods
+frontend,frontend/src/services/chatService.ts,ChatMessage,interface,role: ; content: string,TypeScript interface,Interface defining shape of ChatMessage objects
+frontend,frontend/src/services/chatService.ts,SourceCitation,interface,node_pk: number; node_title: string; node_number: string; xml_id: string; doc_pk: number,TypeScript interface,Interface defining shape of SourceCitation objects
+frontend,frontend/src/services/chatService.ts,StreamCallbacks,interface,onSources: ; sources: SourceCitation[]; onToken: ; token: string; onDone: ; onError: ; message: string,TypeScript interface,Interface defining shape of StreamCallbacks objects
+frontend,frontend/src/services/chatService.ts,streamChat,function,"query: string, history: ChatMessage[], callbacks: StreamCallbacks, docPk?: number | null,",AbortController,Service object exposing chatservice API methods
+frontend,frontend/src/services/contentService.ts,AbbreviationEntry,interface,abbr: string; full: string,TypeScript interface,Interface defining shape of AbbreviationEntry objects
+frontend,frontend/src/services/contentService.ts,AbbreviationsPayload,interface,title: string; rows: AbbreviationEntry[],TypeScript interface,Interface defining shape of AbbreviationsPayload objects
+frontend,frontend/src/services/contentService.ts,DocumentInfo,interface,doc_id: string; title: string; doc_type: string; classification: string,TypeScript interface,Interface defining shape of DocumentInfo objects
+frontend,frontend/src/services/contentService.ts,FlatTocItem,interface,id: number; parentId: number | null; title: string; nodeType: string; level: number; order: number; path: string; hasContent: boolean,TypeScript interface,Interface defining shape of FlatTocItem objects
+frontend,frontend/src/services/contentService.ts,PrepagesInfo,interface,url: string; title: string; filename: string,TypeScript interface,Interface defining shape of PrepagesInfo objects
+frontend,frontend/src/services/contentService.ts,buildTree,function,flat: FlatTocItem[],TocItem[],Service object exposing contentservice API methods
+frontend,frontend/src/services/notesService.ts,ApiNote,interface,topic_id: string; topic_title: string; user_id: number; content: string; updated_at: string,TypeScript interface,Interface defining shape of ApiNote objects
+frontend,frontend/src/services/notesService.ts,adapt,function,n: ApiNote,Note,Service object exposing notesservice API methods
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,DetectedPhrase,interface,text: string; bbox: ; x0: number; y0: number; x1: number; y1: number,TypeScript interface,Interface defining shape of DetectedPhrase objects
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,DetectedWord,interface,text: string; confidence: number; bbox: ; x0: number; y0: number; x1: number; y1: number,TypeScript interface,Interface defining shape of DetectedWord objects
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,ImageDimensions,interface,width: number; height: number,TypeScript interface,Interface defining shape of ImageDimensions objects
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,autoDetectHotspots,function,"imagePath: string, sections: SectionInfo[]",Promise<HotspotData[]>,Function: autoDetectHotspots
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,autoDetectHotspotsAI,function,"imagePath: string, sections: SectionInfo[]",Promise<HotspotData[]>,Function: autoDetectHotspotsAI
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,detectHotspots,function,"imagePath: string, sections: SectionInfo[], mode: ""exact"" | ""semantic""",Promise<HotspotData[]>,Function: detectHotspots
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,extractWords,function,"page: Tesseract.Page, minConf: number",DetectedWord[],Function: extractWords
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,getImageDimensions,function,filePath: string,ImageDimensions | null,Fetches ageDimensions data from API
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,matchSection,function,"label: string, sections: SectionInfo[], mode: ""exact"" | ""fuzzy"" | ""semantic""",Promise<,Function: matchSection
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,mergeWordsIntoPhrases,function,"words: DetectedWord[], dims: ImageDimensions, seenLabels: Set<string>",DetectedPhrase[],Function: mergeWordsIntoPhrases
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,normalize,function,text: string,string,Function: normalize
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,ocrRegion,function,"imagePath: string, sections: SectionInfo[], xPct: number, yPct: number, wPct: number, hPct: number",Promise<,Function: ocrRegion
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,phraseToHotspot,function,"phrase: DetectedPhrase, dims: ImageDimensions",,Function: phraseToHotspot
+image-upload,Image Upload Form Design (1)/server/autoDetect.ts,runOCR,function,"imagePath: string, dims: ImageDimensions, enhanced = false",Promise<DetectedPhrase[]>,Function: runOCR
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,clearEmbeddingCache,function,,void,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,cosineSimilarity,function,"a: number[], b: number[]",number,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,getEmbedding,function,text: string,Promise<number[] | null>,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,getOrComputeSectionEmbeddings,function,sections: SectionInfo[],Promise<void>,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,isOllamaAvailable,function,,Promise<boolean>,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,l2Norm,function,v: number[],number,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,normalize,function,text: string,string,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/embeddingService.ts,semanticMatch,function,"label: string, sections: SectionInfo[]",Promise<,Service object exposing embeddingservice API methods
+image-upload,Image Upload Form Design (1)/server/index.ts,checkExpiry,function,,boolean,Function: checkExpiry
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,DocumentInfo,interface,docId: string; title: string,TypeScript interface,Interface defining shape of DocumentInfo objects
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,FigureData,interface,id: string; number: string; title: string; graphicSrc: string; hotspots: HotspotData[],TypeScript interface,Interface defining shape of FigureData objects
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,HotspotData,interface,x: number; y: number; w: number; h: number; label: string; desc: string; target: string; matchSource:,TypeScript interface,Interface defining shape of HotspotData objects
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,SectionInfo,interface,id: string; number: string; title: string; level: number,TypeScript interface,Interface defining shape of SectionInfo objects
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,getDocsRoot,function,,string | null,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,getElementsByTagName,function,"parent: Node, tag: string",Element[],Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,getFigures,function,docId: string,FigureData[],Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,getImagesDir,function,docId: string,string,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,getSections,function,docId: string,SectionInfo[],Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,getXmlPath,function,docId: string,string,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,listDocuments,function,,DocumentInfo[],Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,parseXmlFile,function,filePath: string,Document,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,removeAllHotspots,function,docId: string,,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,requireDocsRoot,function,,string,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,setDocsRoot,function,p: string,void,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,writeFigureHotspots,function,"docId: string, figId: string, hotspots: HotspotData[]",,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/server/xmlService.ts,writeHotspots,function,"docId: string, figureHotspots: Record<string, HotspotData[]>",,Service object exposing xmlservice API methods
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,App,component,,JSX.Element,React component rendering App UI
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,addHotspot,function,"figId: string, hotspot?: HotspotData",,Function: addHotspot
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,approveAll,function,,,Function: approveAll
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,deleteHotspot,function,"figId: string, index: number",,Function: deleteHotspot
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleAiDetect,function,figId: string,,Event handler for AiDetect action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleAiDetectAll,function,,,Event handler for AiDetectAll action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleAutoDetect,function,figId: string,,Event handler for AutoDetect action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleAutoDetectAll,function,,,Event handler for AutoDetectAll action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleRemoveAll,function,,,Event handler for RemoveAll action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleRemoveAllUnmatched,function,,,Event handler for RemoveAllUnmatched action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleRemoveUnmatched,function,figId: string,,Event handler for RemoveUnmatched action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleSetFolder,function,,,Event handler for SetFolder action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleVerifyAllTopics,function,,,Event handler for VerifyAllTopics action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleVerifyTopics,function,figId: string,,Event handler for VerifyTopics action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleWriteFigure,function,figId: string,,Event handler for WriteFigure action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,handleWriteToXml,function,,,Event handler for WriteToXml action
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,toggleApproval,function,figId: string,,Function: toggleApproval
+image-upload,Image Upload Form Design (1)/src/app/App.tsx,updateHotspot,function,"figId: string, index: number, updates: Partial<HotspotData>",,Function: updateHotspot
+image-upload,Image Upload Form Design (1)/src/app/components/ApprovalPanel.tsx,ApprovalPanel,component,"{ figures, workingHotspots, approvalStatus, onToggleApproval, onApproveAll, onWriteToXml, isWriting, }: ApprovalPanelProps",JSX.Element,React component rendering ApprovalPanel UI
+image-upload,Image Upload Form Design (1)/src/app/components/ApprovalPanel.tsx,ApprovalPanelProps,interface,"figures: FigureData[]; workingHotspots: Record<string, HotspotData[]>; approvalStatus: Record<string, boolean>; onToggleApproval: ; figId: string; onApproveAll: ; onWriteToXml: ; isWriting: boolean",TypeScript interface,Interface defining shape of ApprovalPanelProps objects
+image-upload,Image Upload Form Design (1)/src/app/components/FullscreenImageViewer.tsx,FullscreenImageViewer,component,"{ imageUrl, imageName, hotspots, sections, isVerified, onClose, onUpdateHotspot, onAddHotspot, onDeleteHotspot, onRegionOcr, }: FullscreenImageViewerProps",JSX.Element,React component rendering FullscreenImageViewer UI
+image-upload,Image Upload Form Design (1)/src/app/components/FullscreenImageViewer.tsx,FullscreenImageViewerProps,interface,"imageUrl: string; imageName: string; hotspots: HotspotData[]; sections: SectionInfo[]; isVerified: boolean; onClose: ; onUpdateHotspot: ; index: number, updates",TypeScript interface,Interface defining shape of FullscreenImageViewerProps objects
+image-upload,Image Upload Form Design (1)/src/app/components/FullscreenImageViewer.tsx,handleMouseDown,function,e: MouseEvent<HTMLDivElement>,,Event handler for MouseDown action
+image-upload,Image Upload Form Design (1)/src/app/components/FullscreenImageViewer.tsx,handleMouseMove,function,e: MouseEvent<HTMLDivElement>,,Event handler for MouseMove action
+image-upload,Image Upload Form Design (1)/src/app/components/FullscreenImageViewer.tsx,handleMouseUp,function,,,Event handler for MouseUp action
+image-upload,Image Upload Form Design (1)/src/app/components/TargetSectionPicker.tsx,TargetSectionPicker,component,"{ sections, value, onChange }: TargetSectionPickerProps",JSX.Element,React component rendering TargetSectionPicker UI
+image-upload,Image Upload Form Design (1)/src/app/components/TargetSectionPicker.tsx,TargetSectionPickerProps,interface,sections: SectionInfo[]; value: string; onChange: ; sectionId: string,TypeScript interface,Interface defining shape of TargetSectionPickerProps objects
+image-upload,Image Upload Form Design (1)/src/app/components/TargetSectionPicker.tsx,handleClickOutside,function,e: MouseEvent,,Event handler for ClickOutside action
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,aiDetectHotspots,function,"docId: string, figId: string",Promise<,Function: aiDetectHotspots
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,autoDetectHotspots,function,"docId: string, figId: string",Promise<,Function: autoDetectHotspots
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,checkDocsRoot,function,,Promise<,Function: checkDocsRoot
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,checkExpiry,function,,Promise<,Function: checkExpiry
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,fetchDocuments,function,,Promise<DocumentInfo[]>,Fetches Documents data from API
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,fetchFigures,function,docId: string,Promise<FigureData[]>,Fetches Figures data from API
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,fetchSections,function,docId: string,Promise<SectionInfo[]>,Fetches Sections data from API
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,getExportZipUrl,function,,string,Fetches portZipUrl data from API
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,getImageUrl,function,"docId: string, graphicSrc: string",string,Fetches ageUrl data from API
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,ocrRegion,function,"docId: string, figId: string, x: number, y: number, w: number, h: number",Promise<,Function: ocrRegion
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,removeAllHotspots,function,docId: string,Promise<void>,Function: removeAllHotspots
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,setDocsRoot,function,folderPath: string,Promise<,Sets DocsRoot state
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,submitHotspots,function,"docId: string, payload: FigureHotspotsPayload",Promise<,Function: submitHotspots
+image-upload,Image Upload Form Design (1)/src/app/lib/api.ts,writeFigureHotspots,function,"docId: string, figId: string, hotspots: HotspotData[]",Promise<void>,Function: writeFigureHotspots
+image-upload,Image Upload Form Design (1)/src/app/types.ts,DocumentInfo,interface,docId: string; title: string,TypeScript interface,Interface defining shape of DocumentInfo objects
+image-upload,Image Upload Form Design (1)/src/app/types.ts,FigureData,interface,id: string; number: string; title: string; graphicSrc: string; hotspots: HotspotData[],TypeScript interface,Interface defining shape of FigureData objects
+image-upload,Image Upload Form Design (1)/src/app/types.ts,FigureHotspotsPayload,interface,"figures: Record<string, HotspotData[]>",TypeScript interface,Interface defining shape of FigureHotspotsPayload objects
+image-upload,Image Upload Form Design (1)/src/app/types.ts,HotspotData,interface,x: number; y: number; w: number; h: number; label: string; desc: string; target: string,TypeScript interface,Interface defining shape of HotspotData objects
+image-upload,Image Upload Form Design (1)/src/app/types.ts,SectionInfo,interface,id: string; number: string; title: string; level: number,TypeScript interface,Interface defining shape of SectionInfo objects
+pipeline,pipeline_updated/ietm_pipeline/config.py,PipelineConfig,class,skip_styles: List[str]; skip_text_patterns: List[str]; caption_style: str; heading_style_pattern: str; figure_caption_pattern: str; table_caption_pattern: str; xref_pattern: str; alpha_list_pattern: str; roman_list_pattern: str; numeric_list_pattern: str,instance,
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,ClassifiedElement,class,elem_type: ElemType; raw: RawElement; heading_level: int; heading_title: str; figure_number: str; figure_title: str; image_filename: str; table_number: str; table_title: str; list_label: str,instance,
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,ElemType,class,,instance,
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,_detect_list,function,style: str; text: str; alpha_re; roman_re; num_re; element,"Tuple[str, str]","Return (list_type_str, label) or ("""", """") if not a list item."
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,_find_figure_caption,function,elements: List[RawElement]; img_idx: int; fig_cap_re; max_look: int; heading_re; used: List[bool],"Tuple[str, str, Optional[int]]",Scan forward from img_idx+1 for a figure caption.
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,_find_figure_caption_before,function,elements: List[RawElement]; img_idx: int; fig_cap_re; max_look: int; used: List[bool],"Tuple[str, str, Optional[int]]",Scan backward from img_idx-1 for a figure caption (caption-above-image layout).
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,_find_image_rid_in_element,function,element,Optional[str],Return an image rId only if the element looks like a single-image figure
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,_find_table_caption_before,function,elements: List[RawElement]; tbl_idx: int; tbl_cap_re; used: List[bool],"Tuple[str, str]",Look backward up to 3 positions for a table caption paragraph.
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,_should_skip,function,style: str; text: str; skip_style_set: set; skip_text_res: list; el: RawParagraph,bool,
+pipeline,pipeline_updated/ietm_pipeline/content_classifier.py,classify,function,elements: List[RawElement]; image_map: dict; config: PipelineConfig; ctx,List[ClassifiedElement],Classify every element in *elements* and return ClassifiedElement list
+pipeline,pipeline_updated/ietm_pipeline/context.py,PipelineContext,class,,instance,
+pipeline,pipeline_updated/ietm_pipeline/context.py,PipelineWarning,class,stage: str; element_index: int; message: str; severity: str,instance,
+pipeline,pipeline_updated/ietm_pipeline/context.py,__init__,function,,,
+pipeline,pipeline_updated/ietm_pipeline/context.py,print_report,function,,None,
+pipeline,pipeline_updated/ietm_pipeline/context.py,warn,function,stage: str; index: int; message: str; severity: str,None,
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,DocMetadata,class,title: str; subject: str,instance,
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,RawParagraph,class,index: int; style: str; runs: List[TextRun]; image_rid: Optional[str]; element: object,instance,
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,RawTable,class,index: int; element: object,instance,
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,_find_image_rid,function,para_element,Optional[str],Return the relationship ID of the first image blip inside a paragraph.
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,_parse_body,function,"doc_xml: bytes; image_map: Dict[str, str]; ctx",List[RawElement],Walk w:body children and build the flat element list.
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,_parse_metadata,function,zf: zipfile.ZipFile,DocMetadata,Extract title and subject from docProps/core.xml.
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,_parse_rels,function,zf: zipfile.ZipFile,"Dict[str, str]",Parse word/_rels/document.xml.rels → {rId: target_path}.
+pipeline,pipeline_updated/ietm_pipeline/docx_reader.py,read,function,docx_path: str; output_dir: Path; config: PipelineConfig; ctx,"Tuple[List[RawElement], Dict[str, str], DocMetadata]",Parse the .docx file.
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_attach_to_doc,function,doc; by_figure; valid_ids; matched_figures; ctx; doc_id,None,
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_attach_to_figure,function,"fig: FigureNode; by_figure: Dict[str, List[dict]]; valid_ids: Set[str]; matched_figures: Set[str]; ctx; doc_id: str",None,
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_attach_to_section,function,sec: SectionNode; by_figure; valid_ids; matched_figures; ctx; doc_id,None,
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_collect_ids_from_section,function,sec: SectionNode; ids: Set[str],None,
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_collect_section_ids,function,doc: DocumentNode,Set[str],
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_find_section_by_number,function,doc: DocumentNode; number: str,"Optional[Union[SectionNode, LeafNode]]",Return the first SectionNode or LeafNode whose .number matches *number*.
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,_search_in_section,function,sec: SectionNode; number: str,"Optional[Union[SectionNode, LeafNode]]",
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,merge,function,doc: DocumentNode; hotspots_path: str; ctx,None,"Load *hotspots_path*, validate, and attach hotspots to figures in *doc*."
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,merge_media,function,doc: DocumentNode; media_manifest_path: str; ctx,None,Load *media_manifest_path* (JSON) and attach VideoNode / PdfNode blocks to
+pipeline,pipeline_updated/ietm_pipeline/hotspot_merger.py,merge_models,function,doc: DocumentNode; model_manifest_path: str; ctx,None,Load *model_manifest_path* (JSON) and attach Model3DNode blocks to the
+pipeline,pipeline_updated/ietm_pipeline/image_extractor.py,_convert_with_pillow,function,src: Path; dst_png: Path; ctx,bool,
+pipeline,pipeline_updated/ietm_pipeline/image_extractor.py,_convert_with_soffice,function,src: Path; images_dir: Path; ctx,bool,
+pipeline,pipeline_updated/ietm_pipeline/image_extractor.py,_preserve_original,function,src: Path,None,Rename src to src.name + '.original' so the PNG sibling can take the clean name.
+pipeline,pipeline_updated/ietm_pipeline/image_extractor.py,extract_all,function,"zf: zipfile.ZipFile; rels_map: Dict[str, str]; output_dir: Path; ctx","Dict[str, str]",Copy every image referenced in *rels_map* to *output_dir/images/*.
+pipeline,pipeline_updated/ietm_pipeline/main.py,_check_expiry,function,,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,_count_hotspots,function,doc; ctx,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,_count_tree,function,doc; ctx,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,_parse_heading_markers,function,doc; config,None,Walk every SectionNode and LeafNode.  If the title contains bracketed
+pipeline,pipeline_updated/ietm_pipeline/main.py,_process_title,function,title: str; node,,
+pipeline,pipeline_updated/ietm_pipeline/main.py,_rename_images,function,doc; output_dir: Path,None,Rename extracted images to match their figure IDs (e.g. image9.png -> fig_1_1.png).
+pipeline,pipeline_updated/ietm_pipeline/main.py,_walk_section,function,sec: SectionNode,,
+pipeline,pipeline_updated/ietm_pipeline/main.py,cmd_add_global,function,args,None,Register a global asset (prepages PDF / abbreviations CSV) with the IETM root.
+pipeline,pipeline_updated/ietm_pipeline/main.py,cmd_convert,function,args,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,cmd_convert_s1000d,function,args,None,Convert an S1000D Data Module XML file to IETM XML.
+pipeline,pipeline_updated/ietm_pipeline/main.py,cmd_list,function,args,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,cmd_unregister,function,args,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,main,function,,None,
+pipeline,pipeline_updated/ietm_pipeline/main.py,walk,function,sec,,
+pipeline,pipeline_updated/ietm_pipeline/main.py,walk,function,sec,,
+pipeline,pipeline_updated/ietm_pipeline/main.py,walk,function,sec,,
+pipeline,pipeline_updated/ietm_pipeline/main.py,walk_blocks,function,blocks,,
+pipeline,pipeline_updated/ietm_pipeline/main.py,walk_blocks,function,blocks,,
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,_load_or_create,function,master_path: Path,etree._Element,
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,_save,function,root_el: etree._Element; path: Path,None,
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,list_global_assets,function,ietm_root: Path,"Dict[str, Dict[str, str]]","Return {kind: {file, title, updatedDate}} for all registered global assets."
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,list_manuals,function,ietm_root: Path,"List[Dict[str, str]]",Return a list of manual dicts from master.xml.
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,register,function,ietm_root: Path; doc_id: str; title: str; rel_path: str,None,Add or update a manual entry in master.xml.
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,register_global_asset,function,ietm_root: Path; kind: str; src_path: Path; title: Optional[str],str,Copy a global asset (prepages.pdf / abb.csv) into <root>/_global/ and
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,unregister,function,ietm_root: Path; doc_id: str,bool,Remove a manual from master.xml.  Returns True if found and removed.
+pipeline,pipeline_updated/ietm_pipeline/master_registry.py,unregister_global_asset,function,ietm_root: Path; kind: str,bool,Remove a global asset entry (and its file). Returns True if removed.
+pipeline,pipeline_updated/ietm_pipeline/models.py,DocumentNode,class,title: str; doc_id: str; sections: List[SectionNode],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,FigureNode,class,id: str; number: str; title: str; image_filename: str; hotspots: List[HotspotNode],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,HotspotNode,class,x: int; y: int; w: int; h: int; target: str; text: str; label: str; desc: str,instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,LeafGroup,class,root_section: 'SectionNode'; leaves: List[LeafNode],instance,Placed at the PARENT section level (not inside the root_section).
+pipeline,pipeline_updated/ietm_pipeline/models.py,LeafNode,class,id: str; number: str; title: str; blocks: List[Block]; access_groups: str; security_class: str,instance,Terminal node within a LeafGroup.  Same structure as SectionNode
+pipeline,pipeline_updated/ietm_pipeline/models.py,ListItemNode,class,label: str; runs: List[Run]; sub_items: List['ListItemNode']; sub_list_type: Optional['ListType'],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,ListNode,class,list_type: ListType; items: List[ListItemNode],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,ListType,class,,instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,MeshHotspotNode,class,mesh_name: str; target: str; text: str,instance,Clickable region linked to a named mesh in a 3D model.
+pipeline,pipeline_updated/ietm_pipeline/models.py,Model3DNode,class,id: str; file: str; format: str; title: str; mesh_hotspots: List[MeshHotspotNode],instance,A 3D model (GLB / GLTF / OBJ) associated with a topic.
+pipeline,pipeline_updated/ietm_pipeline/models.py,ParagraphNode,class,runs: List[Run]; para_type: str,instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,PdfNode,class,id: str; file: str; title: str,instance,A PDF document associated with a topic.
+pipeline,pipeline_updated/ietm_pipeline/models.py,SectionNode,class,"id: str; number: str; level: int; title: str; blocks: List[Block]; children: List[Union['SectionNode', LeafGroup]]; access_groups: str; security_class: str",instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,TableCell,class,runs: List[Run]; col_span: int; row_span: int; is_continuation: bool; content_list: Optional['ListNode']; image_paths: List[str],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,TableNode,class,id: str; number: str; title: str; col_count: int; header_rows: List[TableRow]; body_rows: List[TableRow],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,TableRow,class,cells: List[TableCell],instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,TextRun,class,text: str; bold: bool; italic: bool; underline: bool,instance,
+pipeline,pipeline_updated/ietm_pipeline/models.py,VideoNode,class,id: str; file: str; title: str,instance,An MP4 / WebM video associated with a topic.
+pipeline,pipeline_updated/ietm_pipeline/models.py,XRefRun,class,display_text: str; target_id: str; ref_type: str; bold: bool; italic: bool; underline: bool,instance,"A cross-reference to a figure or table, replacing part of a TextRun."
+pipeline,pipeline_updated/ietm_pipeline/models.py,is_leaf,function,,bool,True when this section has no child sections or leaf-groups.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_ContentReader,class,"doc_id: str; images_dir: Path; icn_map: Dict[str, Path]; ctx",instance,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,__init__,function,"doc_id: str; images_dir: Path; icn_map: Dict[str, Path]; ctx",,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_build_icn_map,function,source_dir: Path,"Dict[str, Path]",Build a map from ICN identifier → image file path.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_extract_metadata,function,root: etree._Element; ctx,"Tuple[str, str, str, str]","Return (doc_id, title, classification, access_groups)."
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_find_local,function,el: etree._Element; local_name: str,Optional[etree._Element],Find first direct child with matching local name (namespace-agnostic).
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_local,function,el: etree._Element,str,"Return local name of an element, stripping Clark-notation namespace."
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_callout,function,el: etree._Element; callout_type: str,ParagraphNode,Read warning/caution/note — extract inner text from child paras.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_cals_row,function,row_el: etree._Element,TableRow,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_figure,function,el: etree._Element,Optional[FigureNode],
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_levelled_para,function,el: etree._Element; level: int; parent_num: str,SectionNode,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_list,function,el: etree._Element; lname: str,Optional[ListNode],
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_para,function,el: etree._Element; para_type: str,ParagraphNode,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_step,function,el: etree._Element; level: int; parent_num: str; step_idx: int,SectionNode,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_read_table,function,el: etree._Element,Optional[TableNode],Parse CALS-style S1000D table into a TableNode.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_resolve_icn,function,icn: str; fig_number: str,str,Copy the ICN image file to images_dir and return relative path.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,_text_of,function,el: Optional[etree._Element],str,
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,read,function,dm_path: str; ietm_root: Path; config; ctx,DocumentNode,Parse an S1000D Data Module XML file and return a DocumentNode.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,read_block,function,el: etree._Element,List[Block],
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,read_description,function,desc_el: etree._Element,List[SectionNode],Read a <description> element → list of top-level SectionNodes.
+pipeline,pipeline_updated/ietm_pipeline/s1000d_reader.py,read_procedure,function,proc_el: etree._Element,List[SectionNode],Read a <procedure> element → list of top-level SectionNodes.
+pipeline,pipeline_updated/ietm_pipeline/table_parser.py,_detect_cell_list_item,function,text: str; config,"Tuple[Optional[str], Optional[str], Optional[str]]",Try all list patterns against *text*.
+pipeline,pipeline_updated/ietm_pipeline/table_parser.py,_get_cell_patterns,function,config,list,"Build (list_type_str, compiled_pattern) pairs from config."
+pipeline,pipeline_updated/ietm_pipeline/table_parser.py,_make_rows,function,row_dicts,List[TableRow],
+pipeline,pipeline_updated/ietm_pipeline/table_parser.py,_pad_rows,function,rows: List[TableRow]; col_count: int,None,Pad rows that are shorter than col_count with empty cells.
+pipeline,pipeline_updated/ietm_pipeline/table_parser.py,_parse_cell_content,function,tc; config; image_map,"Tuple[list, Optional[ListNode], list]","Returns (runs, content_list, image_paths)."
+pipeline,pipeline_updated/ietm_pipeline/table_parser.py,parse_table,function,element; table_id: str; table_number: str; table_title: str; config; image_map,TableNode,Parse a w:tbl element into a TableNode.
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,_is_on,function,tag,,
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,_iter_runs,function,para_element: etree._Element,,"Yield all w:r elements, including those inside hyperlinks, revisions, and field codes."
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,_merge_runs,function,runs: List[TextRun],List[TextRun],Merge consecutive runs that have identical formatting.
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,_run_formatting,function,run_el: etree._Element,,"Return (bold, italic, underline) booleans for a w:r element."
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,_run_text,function,run_el: etree._Element,str,Extract raw text from a w:r element.
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,extract_runs,function,para_element: etree._Element,List[TextRun],Parse all w:r elements inside *para_element* and return merged TextRuns.
+pipeline,pipeline_updated/ietm_pipeline/text_parser.py,plain_text,function,runs: List[TextRun],str,Return the concatenated plain text from a list of TextRuns.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_PendingListItem,class,item: ListItemNode; list_type: str,instance,Sentinel: a list item not yet grouped into a ListNode.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_RawTableBlock,class,id: str; number: str; title: str; element,instance,Sentinel: holds the lxml element until table_parser processes it.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,__init__,function,item: ListItemNode; list_type: str,,
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,__init__,function,id: str; number: str; title: str; element,,
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_alpha_label,function,idx: int,str,"0->'a', 25->'z', 26->'aa', 27->'ab', ..."
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_append_block,function,node; block: Block,None,Add a content block to a section or the document root (goes to first section).
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_append_section,function,parent; sec: SectionNode,None,Add a SectionNode to parent (DocumentNode or SectionNode).
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_apply_leaf_grouping,function,node,None,Recursively apply leaf-group detection depth-first.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_assign_numbers,function,doc: DocumentNode,None,Assign dotted section numbers and IDs to all sections.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_consolidate_block_list,function,blocks,,Replace consecutive _PendingListItem objects with ListNode groups.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_make_block,function,ce: ClassifiedElement; auto_tbl: List[int]; doc_id: str,Block,Convert a ClassifiedElement into a Block node.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_number_section,function,sec: SectionNode; parent_number: str; sibling_index: int; doc_id: str,None,
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_runs_from_ce,function,ce: ClassifiedElement,,Extract runs from a classified element's raw paragraph.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,_strip_list_prefix,function,runs; label: str,,Strip the list label prefix (e.g. '(a) ') from the beginning of runs.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,build,function,classified: List[ClassifiedElement]; metadata: DocMetadata; config; ctx,DocumentNode,Convert the flat classified list into a DocumentNode tree.
+pipeline,pipeline_updated/ietm_pipeline/tree_builder.py,consolidate_lists,function,sections: List[SectionNode],None,Walk all sections and replace runs of _PendingListItem in each
+pipeline,pipeline_updated/ietm_pipeline/utils.py,compute_child_number,function,parent_number: str; sibling_index: int,str,Dotted section number from parent number and 0-based sibling index.
+pipeline,pipeline_updated/ietm_pipeline/utils.py,make_figure_id,function,number: str; doc_id: str,str,
+pipeline,pipeline_updated/ietm_pipeline/utils.py,make_section_id,function,number: str; doc_id: str,str,
+pipeline,pipeline_updated/ietm_pipeline/utils.py,make_table_id,function,number: str; doc_id: str,str,
+pipeline,pipeline_updated/ietm_pipeline/utils.py,normalize_whitespace,function,text: str,str,Collapse runs of whitespace to a single space and strip.
+pipeline,pipeline_updated/ietm_pipeline/utils.py,qn,function,ns_prefix: str; local: str,str,"Clark-notation qualified name, e.g. qn('w', 'p') → '{...}p'."
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_blocks,function,parent_el; blocks: list; ctx; config,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_figure,function,parent_el; fig: FigureNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_leaf,function,parent_el; leaf: LeafNode; ctx; config,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_leaf_group,function,parent_el; group: LeafGroup; ctx; config,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_list,function,parent_el; lst: ListNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_list_item,function,parent_el; item: ListItemNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_model3d,function,parent_el; model: Model3DNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_para,function,parent_el; para: ParagraphNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_pdf,function,parent_el; pdf: PdfNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_run,function,parent_el; run: Run,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_section,function,parent_el; sec: SectionNode; ctx; config,etree._Element,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_table,function,parent_el; tbl: TableNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_table_block,function,parent_el; block; ctx; config,None,Parse _RawTableBlock or emit already-parsed TableNode.
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_table_row,function,parent_el; row: TableRow; col_count: int,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_emit_video,function,parent_el; video: VideoNode,None,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,_sub_text,function,parent; tag: str; text: str,etree._Element,
+pipeline,pipeline_updated/ietm_pipeline/xml_emitter.py,emit,function,doc: DocumentNode; output_dir: Path; config; ctx,None,Build the XML tree and write it to output_dir/ietm_output.xml.
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_collect_blocks,function,blocks: list; registry: Dict,None,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_collect_ids,function,doc: DocumentNode; registry: Dict,None,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_collect_section,function,sec: SectionNode; registry: Dict,None,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_process_blocks,function,blocks: list; xref_re; registry; ctx,list,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_process_list_item,function,item: ListItemNode; xref_re; registry; ctx,None,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_process_runs,function,runs: List[Run]; xref_re; registry: Dict; ctx,List[Run],"Split TextRuns at xref match boundaries, replacing matches with XRefRun."
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_split_run,function,run: TextRun; xref_re; registry: Dict; ctx,List[Run],Split a single TextRun at all xref matches.
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_walk_doc,function,doc: DocumentNode; xref_re; registry; ctx,None,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,_walk_section,function,sec: SectionNode; xref_re; registry; ctx,None,
+pipeline,pipeline_updated/ietm_pipeline/xref_resolver.py,resolve,function,doc: DocumentNode; config: PipelineConfig; ctx,None,"Build a cross-reference registry from the tree, then walk every run and"
+pipeline,pipeline_updated/pipeline_server.py,PipelineHandler,class,,instance,
+pipeline,pipeline_updated/pipeline_server.py,do_GET,function,,,Serve static files and endpoints
+pipeline,pipeline_updated/pipeline_server.py,do_POST,function,,,Handle POST requests
+pipeline,pipeline_updated/pipeline_server.py,handle_pick_folder,function,title,,Open native folder picker dialog (run in thread)
+pipeline,pipeline_updated/pipeline_server.py,handle_run_hotspot_merge,function,data,,Re-run pipeline with hotspots enrichment
+pipeline,pipeline_updated/pipeline_server.py,handle_run_import,function,data,,Run Django import_xml command
+pipeline,pipeline_updated/pipeline_server.py,handle_run_pipeline,function,data,,Run pipeline convert command
+pipeline,pipeline_updated/pipeline_server.py,handle_save_xml,function,data,,Copy generated XML to user-selected folder
+pipeline,pipeline_updated/pipeline_server.py,handle_upload_docx,function,files,,Save uploaded DOCX files
+pipeline,pipeline_updated/pipeline_server.py,handle_upload_manifest,function,files; manifest_type,,"Save manifest files (hotspots.json, models.json, media.json)"
+pipeline,pipeline_updated/pipeline_server.py,handle_upload_xml,function,files,,Save uploaded XML files (enriched XMLs for hotspot step)
+pipeline,pipeline_updated/pipeline_server.py,log_message,function,format; *args,,Suppress default logging
+pipeline,pipeline_updated/pipeline_server.py,parse_multipart_form,function,content_type; body,,Parse multipart form data (basic)
+pipeline,pipeline_updated/pipeline_server.py,pick,function,,,
+pipeline,pipeline_updated/pipeline_server.py,pick_folder_dialog,function,title,,"Opens native folder picker, returns path or None"
+pipeline,pipeline_updated/pipeline_server.py,run_server,function,port,,Start the HTTP server
+pipeline,pipeline_updated/pipeline_server.py,run_subprocess,function,cmd; cwd; description,,"Run command, capture output, log it"

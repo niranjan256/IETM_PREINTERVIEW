@@ -1,0 +1,26 @@
+{% load static %}
+<!-- HOME SCREEN -->
+<div id="homeScreen" class="home-screen">
+  <div class="home-middle-row">
+    <div class="home-left-buttons">
+      {% for doc in documents %}
+      <button class="home-btn"
+              hx-get="{% url 'content:document_tree' doc.doc_id %}"
+              hx-target="#toc"
+              hx-swap="innerHTML">
+        {{ doc.title|truncatewords:5 }}
+      </button>
+      {% endfor %}
+    </div>
+
+    <div class="home-center-video">
+      <video src="{% static 'Assets/Videofiles/CALM_HOME.mp4' %}" controls></video>
+    </div>
+
+    <div class="home-right-buttons">
+      <button id="opt1" class="home-btn">Option 1</button>
+      <button id="opt2" class="home-btn">Option 2</button>
+      <button id="opt3" class="home-btn">Option 3</button>
+    </div>
+  </div>
+</div>

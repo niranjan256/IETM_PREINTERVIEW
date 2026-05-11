@@ -1,0 +1,95 @@
+{
+  "topbar": {
+    "system_name": "CALM SYSTEM",
+    "doc_title_fallback": "Technical Documentation"
+  },
+  "sidebar": {
+    "search_placeholder": "Search topics..."
+  },
+  "content": {
+    "no_content": "No content available.",
+    "loading": "Loading\u2026",
+    "checklist_on": "Checklist ON",
+    "checklist_off": "Checklist",
+    "search_placeholder": "Search in current topic"
+  },
+  "chat": {
+    "title": "IETM Assistant",
+    "scope_current": "Current Doc",
+    "scope_all": "All Documents",
+    "placeholder": "Ask about this manual\u2026 (Enter to send)",
+    "clear": "Clear",
+    "sources": "Sources:",
+    "empty": "Ask a question about the technical manual.",
+    "searching_all": "All documents",
+    "searching_doc": "Searching: {{docTitle}}",
+    "no_doc": "No document open"
+  },
+  "home": {
+    "title": "Documents",
+    "open": "Open",
+    "explore": "Explore",
+    "hero_title": "Interactive Electronic Technical Manual",
+    "hero_subtitle": "Search across all manuals or select a document below",
+    "search_placeholder": "Search across all manuals...",
+    "available_manuals": "Available Manuals",
+    "media_capabilities": "Media Capabilities",
+    "no_results": "No results found for"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "title": "IETM Viewer",
+    "sign_in_subtitle": "Sign in to continue",
+    "sign_in": "Sign In",
+    "signing_in": "Signing in\u2026",
+    "username_placeholder": "Enter your username",
+    "password_placeholder": "Enter your password"
+  },
+  "nav": {
+    "hide_toc": "Hide TOC",
+    "show_toc": "Show TOC",
+    "admin_panel": "Admin Panel"
+  },
+  "status": {
+    "system_status": "System Status:",
+    "optimal": "Optimal"
+  },
+  "notepad": {
+    "title": "Notepad",
+    "taking_notes": "Taking notes for:",
+    "save_note": "Save Note",
+    "note_saved": "Note saved successfully"
+  },
+  "bookmarks_dialog": {
+    "title": "Bookmarks",
+    "description": "Your saved bookmarks",
+    "empty": "No bookmarks yet"
+  },
+  "notes_dialog": {
+    "title": "Notes",
+    "description": "Your saved notes",
+    "empty": "No notes yet",
+    "empty_note": "Empty note"
+  },
+  "common": {
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "search": "Search",
+    "notes": "Notes",
+    "bookmarks": "Bookmarks",
+    "help": "Help",
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "page": "Page",
+    "of": "of"
+  },
+  "language": {
+    "en": "English",
+    "hi": "\u0939\u093f\u0928\u094d\u0926\u0940"
+  }
+}

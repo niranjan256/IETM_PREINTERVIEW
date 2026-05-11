@@ -1,0 +1,18 @@
+{% comment %}User notes list partial.{% endcomment %}
+<div class="dashboard-inner-list">
+  <h3>My Notes</h3>
+  {% for note in notes %}
+  <div class="note-item">
+    <a href="#"
+       hx-get="{% url 'content:topic_by_xml_id' note.topic_id %}"
+       hx-target="#content-pane"
+       hx-push-url="true">
+      {{ note.topic_id }}
+    </a>
+    <p class="note-preview">{{ note.content|truncatewords:20 }}</p>
+    <span class="note-date">{{ note.updated_at|date:"M d, Y" }}</span>
+  </div>
+  {% empty %}
+  <p>No notes yet.</p>
+  {% endfor %}
+</div>

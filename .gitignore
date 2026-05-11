@@ -1,0 +1,79 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+.eggs/
+dist/
+build/
+*.spec
+venv/
+.ipynb_checkpoints/
+*.ipynb
+*.docx
+
+# ── Django ────────────────────────────────────────────────────────────────────
+backend/staticfiles/
+
+# ── Environment / secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+*.env
+!.env.standalone.example
+!.env.standalone
+
+# ── Node / frontend ───────────────────────────────────────────────────────────
+node_modules/
+dist/
+.vite/
+*.local
+
+# ── Build artifacts / packages ────────────────────────────────────────────────
+IETM_Standalone/
+IETM_Standalone.zip
+frontend.zip
+frontend (2).zip
+*.zip
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Claude Code assistant files ──────────────────────────────────────────────
+.claude/
+.sixth/
+.gemini/
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+.env.docker
+nginx/certs/
+rename_frontend.ps1
+
+# ── Deployment artifacts (regenerable) ───────────────────────────────────────
+dist/
+_trash/
+ietm_offline_bundle/
+finetune/lora_*/
+finetune/dataset.jsonl
+
+# ── Django runtime data ────────────────────────────────────────────────────────
+backend/db.sqlite3
+backend/db.sqlite3-journal
+backend/db.sqlite3.bak*
+backend/chroma_db/
+backend/media/
+
+# ── Pipeline output ───────────────────────────────────────────────────────────
+pipeline_updated/ietm_new/

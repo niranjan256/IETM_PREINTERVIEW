@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}IETM — Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block body %}
+<video autoplay muted loop id="bgVideo">
+  <source src="{% static 'Assets/Videofiles/CALM_System.mp4' %}" type="video/mp4">
+</video>
+
+<div class="login-container">
+  <h1>System Login</h1>
+  <form method="post" action="{% url 'content:login' %}">
+    {% csrf_token %}
+    <div class="input-group">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" name="username" placeholder="Username" required autofocus>
+    </div>
+    <div class="input-group">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" name="password" placeholder="Password" required>
+    </div>
+    {% if error %}
+    <p id="errorMsg">{{ error }}</p>
+    {% endif %}
+    <button type="submit">Login</button>
+  </form>
+</div>
+{% endblock %}

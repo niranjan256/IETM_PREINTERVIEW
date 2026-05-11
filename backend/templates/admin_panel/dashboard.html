@@ -1,0 +1,80 @@
+<div class="page" id="dashboard" style="display:block;">
+  <h2>Dashboard</h2>
+  <div class="cards" id="dashboardCards">
+    <div class="card card-more" style="cursor:pointer;"
+         hx-get="{% url 'admin_panel:list_users' %}?status=active"
+         hx-target="#contentRoot" hx-push-url="true">
+      <div class="card-title">Total Active Users</div>
+      <div class="card-sub">{{ active_users }}</div>
+      <span class="card-more-icon"><i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+    <div class="card card-more" style="cursor:pointer;"
+         hx-get="{% url 'admin_panel:list_users' %}?status=inactive"
+         hx-target="#contentRoot" hx-push-url="true">
+      <div class="card-title">Inactive Users</div>
+      <div class="card-sub">{{ inactive_users }}</div>
+      <span class="card-more-icon"><i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+    <div class="card card-more" style="cursor:pointer;"
+         hx-get="{% url 'admin_panel:list_users' %}"
+         hx-target="#contentRoot" hx-push-url="true">
+      <div class="card-title">All Users</div>
+      <div class="card-sub">{{ total_users }}</div>
+      <span class="card-more-icon"><i class="fa-solid fa-arrow-right"></i></span>
+    </div>
+    <div class="card">
+      <div class="card-title">Departments</div>
+      <div class="card-sub">{{ department_count }}</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Access Control</div>
+      <div class="card-sub">{{ total_users }}</div>
+    </div>
+  </div>
+
+  <div class="dashboard-charts">
+    <div class="chart-box">
+      <h3>Active vs Inactive Users</h3>
+      <canvas id="activeChart" width="280" height="280"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>Users per Department</h3>
+      <canvas id="deptChart"></canvas>
+    </div>
+  </div>
+</div>
+
+{{ chart_data|json_script:"chart-data" }}
+<script>
+(function() {
+  const data = JSON.parse(document.getElementById('chart-data').textContent);
+  const ctx1 = document.getElementById('activeChart');
+  if (ctx1) {
+    new Chart(ctx1, {
+      type: 'doughnut',
+      data: {
+        labels: ['Active', 'Inactive'],
+        datasets: [{
+          data: [data.active, data.inactive],
+          backgroundColor: ['#4caf50', '#f44336']
+        }]
+      }
+    });
+  }
+  const ctx2 = document.getElementById('deptChart');
+  if (ctx2) {
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: data.departments.map(d => d.name),
+        datasets: [{
+          label: 'Users',
+          data: data.departments.map(d => d.count),
+          backgroundColor: '#2196f3'
+        }]
+      },
+      options: { scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+    });
+  }
+})();
+</script>

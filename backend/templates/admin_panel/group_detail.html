@@ -1,0 +1,136 @@
+<div class="page" id="group-details">
+  <div class="page-header">
+    <button class="btn back-btn"
+            hx-get="{% url 'admin_panel:list_groups' %}"
+            hx-target="#contentRoot"
+            hx-push-url="true">
+      <i class="fa-solid fa-angles-left"></i> Back
+    </button>
+  </div>
+
+  <h2 id="groupDetailsTitle">{{ group.name }}</h2>
+
+  <div class="panel">
+    <div class="form-row">
+      <label>Search user to add</label>
+      <input id="groupSearchUser" placeholder="Enter username to add" />
+      <button id="groupSearchBtn" class="btn">Search User</button>
+    </div>
+
+    <div id="groupSearchResults" style="margin-bottom:12px;"></div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="groupUsersTable">
+          {% for member in members %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ member.username }}</td>
+            <td>{{ member.department|default:"-" }}</td>
+            <td>
+              {% if member.is_active %}
+                <span class="status-active">Active</span>
+              {% else %}
+                <span class="status-inactive">Inactive</span>
+              {% endif %}
+            </td>
+            <td>
+              <button class="btn small red remove-member-btn"
+                      data-user-id="{{ member.pk }}"
+                      data-group-id="{{ group.pk }}">
+                Remove
+              </button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="5">No members in this group.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn red" id="groupRemoveBtn" data-group-id="{{ group.pk }}">Remove Group</button>
+      <button class="btn yellow"
+              hx-get="{% url 'admin_panel:activities' %}"
+              hx-target="#contentRoot"
+              hx-push-url="true">Activity</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const groupId = '{{ group.pk }}';
+  const csrf = document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
+
+  // Search user to add
+  document.getElementById('groupSearchBtn')?.addEventListener('click', () => {
+    const q = document.getElementById('groupSearchUser').value.trim();
+    if (!q) return;
+    fetch('/api/users/?q=' + encodeURIComponent(q), { credentials: 'same-origin' })
+      .then(r => r.json())
+      .then(data => {
+        const results = document.getElementById('groupSearchResults');
+        const users = Array.isArray(data) ? data : (data.users || []);
+        if (!users.length) {
+          results.innerHTML = '<p style="color:#888;">No users found.</p>';
+          return;
+        }
+        results.innerHTML = users.map(u => `
+          <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #eee;">
+            <span>${u.username}</span>
+            <button class="btn small green add-to-group-btn" data-user-id="${u.id}">Add</button>
+          </div>`).join('');
+        results.querySelectorAll('.add-to-group-btn').forEach(btn => {
+          btn.addEventListener('click', () => addUserToGroup(btn.dataset.userId));
+        });
+      })
+      .catch(() => {
+        document.getElementById('groupSearchResults').innerHTML = '<p style="color:#c00;">Search failed.</p>';
+      });
+  });
+
+  function addUserToGroup(userId) {
+    fetch('/api/groups/' + groupId + '/members/', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf },
+      body: JSON.stringify({ user_id: userId })
+    }).then(() => location.reload()).catch(() => alert('Failed to add user.'));
+  }
+
+  // Remove member
+  document.querySelectorAll('.remove-member-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm('Remove this user from the group?')) return;
+      fetch('/api/groups/' + groupId + '/members/' + btn.dataset.userId + '/', {
+        method: 'DELETE',
+        credentials: 'same-origin',
+        headers: { 'X-CSRFToken': csrf }
+      }).then(() => location.reload()).catch(() => alert('Failed to remove user.'));
+    });
+  });
+
+  // Remove group
+  document.getElementById('groupRemoveBtn')?.addEventListener('click', () => {
+    if (!confirm('Are you sure you want to remove this group?')) return;
+    fetch('/api/groups/' + groupId + '/', {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: { 'X-CSRFToken': csrf }
+    }).then(() => {
+      htmx.ajax('GET', '{% url "admin_panel:list_groups" %}', { target: '#contentRoot', swap: 'innerHTML' });
+    }).catch(() => alert('Failed to remove group.'));
+  });
+})();
+</script>

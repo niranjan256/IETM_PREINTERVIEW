@@ -1,0 +1,23 @@
+{% comment %}
+Search results partial — swapped into #searchResults by HTMX.
+Context: results (queryset), query (str)
+{% endcomment %}
+{% if query %}
+  {% for result in results %}
+  <div class="search-result" role="listitem">
+    <a href="{% url 'content:topic' result.node.pk %}"
+       hx-get="{% url 'content:topic' result.node.pk %}"
+       hx-target="#content-pane"
+       hx-push-url="true"
+       class="search-result-link">
+      <span class="search-result-number">{{ result.node.number }}</span>
+      <span class="search-result-title">{{ result.node.title }}</span>
+      {% if result.snippet %}
+      <span class="search-result-snippet">{{ result.snippet }}</span>
+      {% endif %}
+    </a>
+  </div>
+  {% empty %}
+  <div class="search-no-results">No results for "{{ query }}"</div>
+  {% endfor %}
+{% endif %}

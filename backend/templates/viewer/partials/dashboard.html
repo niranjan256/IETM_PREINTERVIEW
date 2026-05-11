@@ -1,0 +1,79 @@
+{% comment %}
+User dashboard partial — swapped into #content-pane by HTMX.
+Context: user
+{% endcomment %}
+<div id="fullDashboard" class="full-dashboard" style="display:block;">
+  <div class="dashboard-inner">
+    <div class="dashboard-top">
+      <div class="dashboard-avatar">
+        <div class="avatar-circle">
+          <span class="avatar-icon"><i class="fa-solid fa-user-gear"></i></span>
+        </div>
+      </div>
+      <div class="dashboard-welcome">
+        <h1>Welcome to IETM <span id="dashboardUsernameLarge">{{ user.username }}</span></h1>
+        <p id="dashboardUserId">{{ user.role|default:"User" }} &mdash; {{ user.department|default:"" }}</p>
+      </div>
+    </div>
+
+    <div id="dashboardBody">
+      <div id="dashboardCards" class="dashboard-cards">
+        <button class="dash-card" id="cardBookmarks"
+                hx-get="{% url 'content:user_bookmarks' %}"
+                hx-target="#innerPageContent">
+          <div class="card-title">Bookmarks</div>
+        </button>
+        <button class="dash-card" id="cardNotes"
+                hx-get="{% url 'content:user_notes' %}"
+                hx-target="#innerPageContent">
+          <div class="card-title">Notes</div>
+        </button>
+        {% if user.role == "admin" %}
+        <a href="/admin-panel/" class="dash-card" id="cardAdminPanel">
+          <div class="card-title">Admin Panel</div>
+        </a>
+        {% endif %}
+      </div>
+
+      <!-- INNER PAGE (shown when a card is clicked) -->
+      <div id="dashboardInnerPage" style="display:none;">
+        <div class="dash-back-container">
+          <button id="dashBackBtn" class="dash-back-btn">
+            <i class="fa-solid fa-angles-left"></i> Back
+          </button>
+        </div>
+        <h3 id="innerPageTitle"></h3>
+        <div id="innerPageContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const cards = document.getElementById('dashboardCards');
+  const innerPage = document.getElementById('dashboardInnerPage');
+  const backBtn = document.getElementById('dashBackBtn');
+
+  document.querySelectorAll('.dash-card[hx-get]').forEach(card => {
+    card.addEventListener('click', function() {
+      const title = this.querySelector('.card-title')?.textContent || '';
+      document.getElementById('innerPageTitle').textContent = title;
+    });
+  });
+
+  // After HTMX loads content into innerPageContent, show the inner page
+  document.body.addEventListener('htmx:afterSwap', function(e) {
+    if (e.detail.target.id === 'innerPageContent') {
+      cards.style.display = 'none';
+      innerPage.style.display = 'block';
+    }
+  });
+
+  backBtn?.addEventListener('click', function() {
+    innerPage.style.display = 'none';
+    cards.style.display = '';
+    document.getElementById('innerPageContent').innerHTML = '';
+  });
+})();
+</script>

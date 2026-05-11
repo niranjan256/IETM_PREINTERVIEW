@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}IETM — Admin Panel{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="app">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>Admin Panel</h1>
+    </div>
+
+    <div class="profile">
+      <div class="avatar"><i class="fa-solid fa-user-tie"></i></div>
+      <div class="userinfo">
+        <div class="name" id="profileName">{{ request.user.username }}</div>
+        <div class="id" id="profileId">{{ request.user.role|default:"admin" }}</div>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <a href="{% url 'admin_panel:dashboard' %}" class="menu-btn {% if active_page == 'dashboard' %}active{% endif %}"
+         hx-get="{% url 'admin_panel:dashboard' %}" hx-target="#contentRoot" hx-push-url="true">Dashboard</a>
+      <a href="{% url 'admin_panel:add_user' %}" class="menu-btn {% if active_page == 'add-user' %}active{% endif %}"
+         hx-get="{% url 'admin_panel:add_user' %}" hx-target="#contentRoot" hx-push-url="true">Add New User</a>
+      <a href="{% url 'admin_panel:list_users' %}" class="menu-btn {% if active_page == 'list-users' %}active{% endif %}"
+         hx-get="{% url 'admin_panel:list_users' %}" hx-target="#contentRoot" hx-push-url="true">Show All Users</a>
+      <a href="{% url 'admin_panel:add_group' %}" class="menu-btn {% if active_page == 'add-group' %}active{% endif %}"
+         hx-get="{% url 'admin_panel:add_group' %}" hx-target="#contentRoot" hx-push-url="true">Add New Group</a>
+      <a href="{% url 'admin_panel:list_groups' %}" class="menu-btn {% if active_page == 'list-groups' %}active{% endif %}"
+         hx-get="{% url 'admin_panel:list_groups' %}" hx-target="#contentRoot" hx-push-url="true">Show All Groups</a>
+      <a href="{% url 'admin_panel:activities' %}" class="menu-btn {% if active_page == 'activities' %}active{% endif %}"
+         hx-get="{% url 'admin_panel:activities' %}" hx-target="#contentRoot" hx-push-url="true">Activities</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn"
+              hx-post="{% url 'content:logout' %}"
+              hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        &#9211; Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- RIGHT CONTENT -->
+  <main class="main">
+    <section class="content" id="contentRoot">
+      {% block admin_content %}{% endblock %}
+    </section>
+  </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/lib/htmx.min.js' %}"></script>
+<script src="{% static 'js/lib/chart.js' %}"></script>
+<script src="{% static 'js/admin.js' %}"></script>
+{% endblock %}

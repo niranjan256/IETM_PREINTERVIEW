@@ -1,0 +1,52 @@
+<div class="page" id="list-groups" data-title="All Groups">
+  <h2>All Groups</h2>
+  <div class="panel">
+    <div class="search-row">
+      <input id="searchGroupInput" placeholder="Search groups..." />
+      <button id="searchGroupBtn" class="btn">Search Group</button>
+    </div>
+    <div class="group-cards" id="groupsGrid">
+      <p style="color:#888;padding:16px;">Loading groups...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  loadGroups();
+
+  document.getElementById('searchGroupBtn')?.addEventListener('click', () => {
+    loadGroups(document.getElementById('searchGroupInput').value.trim());
+  });
+  document.getElementById('searchGroupInput')?.addEventListener('keyup', e => {
+    if (e.key === 'Enter') loadGroups(e.target.value.trim());
+  });
+
+  function loadGroups(query) {
+    const url = '/api/groups/' + (query ? '?q=' + encodeURIComponent(query) : '');
+    fetch(url, { credentials: 'same-origin' })
+      .then(r => r.json())
+      .then(data => {
+        const grid = document.getElementById('groupsGrid');
+        if (!grid) return;
+        const groups = Array.isArray(data) ? data : (data.groups || []);
+        if (!groups.length) {
+          grid.innerHTML = '<p style="color:#888;padding:16px;">No groups found.</p>';
+          return;
+        }
+        grid.innerHTML = groups.map(g => `
+          <div class="group-card" style="cursor:pointer;"
+               hx-get="/admin-panel/groups/${g.id || g.group_id}/"
+               hx-target="#contentRoot" hx-push-url="true">
+            <div class="group-name">${g.group_name || g.name}</div>
+            <div class="group-meta">${g.department || ''}</div>
+          </div>`).join('');
+        htmx.process(grid);
+      })
+      .catch(() => {
+        const grid = document.getElementById('groupsGrid');
+        if (grid) grid.innerHTML = '<p style="color:#c00;padding:16px;">Failed to load groups.</p>';
+      });
+  }
+})();
+</script>

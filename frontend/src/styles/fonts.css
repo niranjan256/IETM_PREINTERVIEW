@@ -1,0 +1,4 @@
+/* Primary font: Segoe UI (matches legacy IETM design) */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

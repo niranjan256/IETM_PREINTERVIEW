@@ -1,0 +1,156 @@
+{% comment %}
+Topic content partial — swapped into #content-pane by HTMX.
+Context: node (ContentNode), blocks (ContentBlock queryset), breadcrumbs (list of ancestors)
+{% endcomment %}
+
+<!-- Update breadcrumb via OOB swap -->
+<div id="breadcrumbPath" hx-swap-oob="innerHTML">
+  <a href="/"
+     hx-get="{% url 'content:home' %}"
+     hx-target="#content-pane"
+     hx-push-url="/">Home</a>
+  {% for crumb in breadcrumbs %}
+    &rsaquo;
+    <a href="{% url 'content:topic' crumb.pk %}"
+       hx-get="{% url 'content:topic' crumb.pk %}"
+       hx-target="#content-pane"
+       hx-push-url="true">{{ crumb.number }} {{ crumb.title|truncatewords:5 }}</a>
+  {% endfor %}
+  &rsaquo; {{ node.number }} {{ node.title|truncatewords:8 }}
+</div>
+
+<div class="content-panels">
+  <div class="topic-panels"
+       data-has-text="{% if has_text %}true{% else %}false{% endif %}"
+       data-has-media="{% if has_media %}true{% else %}false{% endif %}"
+       data-has-table="{% if has_table %}true{% else %}false{% endif %}">
+
+    <!-- TEXT PANEL -->
+    <div class="panel text-panel" id="textContentArea">
+      <div class="textpanel-header">
+        <!-- Local Search -->
+        <div class="local-search-group">
+          <div class="local-search" id="localSearchControls">
+            <input type="text" id="localSearchInput" placeholder="Search..." class="local-search-input">
+            <button class="local-searchBTN"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+            <i id="localSearchPrev" class="fa-solid fa-chevron-up local-search-icon"></i>
+            <i id="localSearchNext" class="fa-solid fa-chevron-down local-search-icon"></i>
+            <span id="localSearchCount" class="local-search-count">0</span>
+          </div>
+        </div>
+
+        <!-- Section dropdown for child sections -->
+        {% if child_sections %}
+        <div class="toc-dropdown">
+          <button id="tocBtn" class="toc-btn">Sections &#9660;</button>
+          <div id="tocMenu" class="toc-menu">
+            {% for child in child_sections %}
+            <a href="{% url 'content:topic' child.pk %}"
+               hx-get="{% url 'content:topic' child.pk %}"
+               hx-target="#content-pane"
+               hx-push-url="true"
+               class="toc-menu-item">
+              {{ child.number }} {{ child.title }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div id="textContentBody">
+        <h2 class="section-title">{{ node.number }} {{ node.title }}</h2>
+        {% for block in blocks %}
+          <div class="content-block">{{ block.content_html|safe }}</div>
+        {% endfor %}
+
+        {# Render child content inline for leaf-groups and merged sections #}
+        {% if leaf_nodes %}
+          {% for child in leaf_nodes %}
+            <div class="leaf-section section-group" id="{{ child.xml_id }}">
+              <h3 class="leaf-title">{{ child.number }} {{ child.title }}</h3>
+              {% for block in child.blocks.all %}
+                <div class="content-block">{{ block.content_html|safe }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="panel-resizer" id="panelResizer"></div>
+
+    <!-- MEDIA PANEL -->
+    <div class="panel image-panel" id="image-panel">
+      {% for media in media_items %}
+        {% if media.media_type == 'image' %}
+          <div class="media-item" data-media-id="{{ media.xml_id }}">
+            <img src="/media/{{ node.document.doc_id }}/{{ media.file_path }}"
+                 alt="{{ media.title }}"
+                 loading="lazy"
+                 class="media-image">
+            {% if media.title %}
+              <p class="media-caption">
+                {% if media.number %}Figure {{ media.number }} &mdash; {% endif %}
+                {{ media.title }}
+              </p>
+            {% endif %}
+            {% if media.hotspots.exists %}
+              <div class="hotspot-container" data-figure-id="{{ media.xml_id }}">
+                {% for hs in media.hotspots.all %}
+                  <div class="hotspot"
+                       style="left:{{ hs.x }}px;top:{{ hs.y }}px;width:{{ hs.width }}px;height:{{ hs.height }}px"
+                       data-target="{{ hs.target_xml_id }}"
+                       title="{{ hs.label }}"
+                       hx-get="{% url 'content:topic_by_xml_id' hs.target_xml_id %}"
+                       hx-target="#content-pane"
+                       hx-push-url="true">
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<!-- Navigation buttons -->
+<div class="topic-nav-buttons">
+  {% if prev_node %}
+  <button class="nav-btn nav-prev"
+          hx-get="{% url 'content:topic' prev_node.pk %}"
+          hx-target="#content-pane"
+          hx-push-url="true">
+    <i class="fa-solid fa-arrow-left"></i> Previous
+  </button>
+  {% endif %}
+  {% if next_node %}
+  <button class="nav-btn nav-next"
+          hx-get="{% url 'content:topic' next_node.pk %}"
+          hx-target="#content-pane"
+          hx-push-url="true">
+    Next <i class="fa-solid fa-arrow-right"></i>
+  </button>
+  {% endif %}
+</div>
+
+<!-- Update prev/next buttons in action bar via OOB -->
+{% if prev_node %}
+<button id="prevBtnTop" class="action-btn" hx-swap-oob="outerHTML"
+        hx-get="{% url 'content:topic' prev_node.pk %}"
+        hx-target="#content-pane"
+        hx-push-url="true">
+  <i class="fa-solid fa-arrow-left"></i>
+</button>
+{% endif %}
+{% if next_node %}
+<button id="nextBtnTop" class="action-btn" hx-swap-oob="outerHTML"
+        hx-get="{% url 'content:topic' next_node.pk %}"
+        hx-target="#content-pane"
+        hx-push-url="true">
+  <i class="fa-solid fa-arrow-right"></i>
+</button>
+{% endif %}
