@@ -9,6 +9,11 @@ def serve_react(request):
         Path(settings.STATIC_ROOT) / "frontend" / "index.html",
     ]
 
+    # In standalone mode WHITENOISE_ROOT points directly to the frontend folder
+    whitenoise_root = getattr(settings, "WHITENOISE_ROOT", None)
+    if whitenoise_root:
+        candidates.append(Path(whitenoise_root) / "index.html")
+
     for d in getattr(settings, "STATICFILES_DIRS", []):
         candidates.append(Path(d) / "frontend" / "index.html")
 

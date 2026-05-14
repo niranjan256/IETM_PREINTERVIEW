@@ -1,14 +1,26 @@
-"""
-Migration to actually create the 'users' table.
+from django.db import migrations, connection
 
-The initial migration (0001) was generated with managed=False, so Django
-never created the table.  Migration 0002 flipped managed to True, but
-Django's AlterModelOptions does not retroactively CREATE the table.
 
-This migration fills the gap by running the equivalent CREATE TABLE.
-"""
+def create_users_table(apps, schema_editor):
+    db = connection.vendor  # 'sqlite' or 'postgresql'
+    if db == 'postgresql':
+        id_col = "id SERIAL PRIMARY KEY"
+        bool_default = "DEFAULT TRUE"
+    else:
+        id_col = "id INTEGER PRIMARY KEY AUTOINCREMENT"
+        bool_default = "DEFAULT 1"
 
-from django.db import migrations
+    with connection.cursor() as cursor:
+        cursor.execute(f"""
+            CREATE TABLE IF NOT EXISTS users (
+                {id_col},
+                username      VARCHAR(255) NOT NULL UNIQUE,
+                password_hash VARCHAR(255) NOT NULL,
+                role          VARCHAR(255) NOT NULL DEFAULT 'viewer',
+                department    VARCHAR(255),
+                is_active     BOOLEAN NOT NULL {bool_default}
+            )
+        """)
 
 
 class Migration(migrations.Migration):
@@ -18,17 +30,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL(
-            sql="""
-            CREATE TABLE IF NOT EXISTS users (
-                id        INTEGER PRIMARY KEY AUTOINCREMENT,
-                username  VARCHAR(255) NOT NULL UNIQUE,
-                password_hash VARCHAR(255) NOT NULL,
-                role      VARCHAR(255) NOT NULL DEFAULT 'viewer',
-                department VARCHAR(255),
-                is_active  BOOLEAN NOT NULL DEFAULT 1
-            );
-            """,
-            reverse_sql="DROP TABLE IF EXISTS users;",
-        ),
+        migrations.RunPython(create_users_table, reverse_code=migrations.RunPython.noop),
     ]

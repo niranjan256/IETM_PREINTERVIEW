@@ -13,6 +13,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
+        // Exclude /media/ and /api/ from the navigate fallback so the service
+        // worker never intercepts iframe navigation to PDFs or API endpoints.
+        navigateFallbackDenylist: [/^\/media\//, /^\/api\//],
         // Precache only small static assets (JS, CSS, fonts, small images).
         // Large binaries (mp4, glb, pdf) are NOT precached here — they are
         // cached on first access via the runtimeCaching rules below.
@@ -81,11 +84,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8001',
+        target: 'http://localhost:8000',
         changeOrigin: true,
       },
       '/media': {
-        target: 'http://localhost:8001',
+        target: 'http://localhost:8000',
         changeOrigin: true,
       },
     },

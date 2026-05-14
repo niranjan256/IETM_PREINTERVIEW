@@ -77,3 +77,29 @@ backend/media/
 
 # ── Pipeline output ───────────────────────────────────────────────────────────
 pipeline_updated/ietm_new/
+
+# ── Large binaries / installers / model weights (do not commit to GitHub) ────
+*.exe
+*.tar
+*.msi
+*.dmg
+*.iso
+*.traineddata
+# Ollama model store
+**/bin/models/
+**/bin/ollama*
+# Electron / packaged builds
+Image Upload Form Design (1)/bin/
+Image Upload Form Design (1)/release/
+Image Upload Form Design (1)/dist-bundle/
+Image Upload Form Design (1)/dist-electron-build/
+# Docker image tarballs
+docker-deployment/ietm-docker-images.tar
+# Database seed dumps (may contain sensitive document IDs / user hashes)
+docker-deployment/seed_data.json
+**/seed_data.json
+
+# ── Restricted document content (CALM_* technical manuals) — never commit ────
+pipeline_updated/
+frontend/public/home-bg.mp4
+frontend/public/examples/

@@ -8,5 +8,4 @@ class Bookmark(models.Model):
     created_at = models.DateTimeField(null=True)
 
     class Meta:
-        managed = False
         db_table = 'bookmarks'

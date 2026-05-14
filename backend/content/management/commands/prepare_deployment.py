@@ -94,15 +94,12 @@ class Command(BaseCommand):
     def _phase2(self, target, master_xml, skip_frontend, skip_embeddings, include_wheels):
         self._log("PHASE 2: embeddings -> frontend build -> package")
 
-        if skip_embeddings:
-            self._log("Skipping embedding generation (--skip-embeddings)")
-        else:
-            self._log("Generating embeddings")
-            call_command("generate_embeddings")
+        if not skip_embeddings:
+            self._log("Skipping embedding generation (RAG removed)")
 
         if not skip_frontend:
             self._log("Building frontend (pnpm build)")
-            self._run(["pnpm", "build"], cwd=FRONTEND_DIR, shell_on_windows=True)
+            self._run(["npm", "run", "build"], cwd=FRONTEND_DIR, shell_on_windows=True)
         else:
             self._log("Skipping frontend build (--skip-frontend-build)")
 
@@ -175,15 +172,12 @@ class Command(BaseCommand):
                 self._log(f"Auto-included wheels from {default_wheels}")
 
     def _package_docker(self, artifact: Path):
-        for name in ["docker-compose.yml", ".env.docker", "nginx", "Dockerfile"]:
-            src = PROJECT_ROOT / name
+        docker_dir = PROJECT_ROOT / "docker-deployment"
+        for name in ["docker-compose.yml", ".env", "nginx.conf", "Dockerfile", "seed_data.json"]:
+            src = docker_dir / name
             if not src.exists():
                 continue
-            dst = artifact / name
-            if src.is_dir():
-                shutil.copytree(src, dst, dirs_exist_ok=True)
-            else:
-                shutil.copy2(src, dst)
+            shutil.copy2(src, artifact / name)
 
     def _write_readme(self, artifact: Path, target: str):
         if target == "standalone":

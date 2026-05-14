@@ -1,0 +1,38 @@
+CREATE TABLE IF NOT EXISTS bookmarks (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    topic_title VARCHAR(255) NOT NULL,
+    topic_path VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE TABLE IF NOT EXISTS notes (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS recent_searches (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    term VARCHAR(255) NOT NULL,
+    at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_activity (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    action VARCHAR(255) NOT NULL,
+    details TEXT NOT NULL,
+    at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS topic_notes (
+    id SERIAL PRIMARY KEY,
+    topic_id TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+    content TEXT NOT NULL DEFAULT '',
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    UNIQUE (topic_id, user_id)
+);

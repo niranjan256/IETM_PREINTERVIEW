@@ -20,7 +20,6 @@ import { contentService, type DocumentInfo, type PrepagesInfo } from "@/services
 import { PrepagesViewer } from "./components/PrepagesViewer";
 import { AbbreviationsDialog } from "./components/AbbreviationsDialog";
 import { DocumentIndexPage } from "./components/DocumentIndexPage";
-import { ChatPanel } from "./components/ChatPanel";
 import { bookmarkService } from "@/services/bookmarkService";
 import { notesService } from "@/services/notesService";
 import type { TocItem, TopicContent, Bookmark, Note, SearchResult } from "@/lib/types";
@@ -551,15 +550,6 @@ export default function App() {
         totalPages={currentTopic?.pageInfo?.total}
       />
 
-      <ChatPanel
-        currentDocPk={currentTopic?.doc_pk ?? null}
-        currentDocTitle={
-          currentTopic
-            ? (currentTopic.breadcrumbs[0]?.title ?? currentTopic.node.title)
-            : undefined
-        }
-        onNavigateToNode={(nodePk) => loadTopic(nodePk)}
-      />
 
     </div>
   );

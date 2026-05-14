@@ -7,5 +7,4 @@ class Note(models.Model):
     updated_at = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'notes'

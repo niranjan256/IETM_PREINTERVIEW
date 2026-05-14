@@ -1,0 +1,11 @@
+**/node_modules
+**/__pycache__
+**/*.pyc
+**/*.pyo
+backend/venv
+backend/.env
+backend/db.sqlite3
+backend/chroma_db
+backend/staticfiles
+frontend/dist
+frontend/.env

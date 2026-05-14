@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(dotenv_path=BASE_DIR / ".env", override=True)
+load_dotenv(dotenv_path=BASE_DIR / ".env", override=False)
 
 IETM_MODE = os.getenv('IETM_MODE', 'standalone')
 
@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'groups_api',
     'topic_notes',
     'content',
-    'rag',
 ]
 
 MIDDLEWARE = [
@@ -49,10 +48,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Standalone mode: WhiteNoise serves React SPA + static files (no Nginx)
+if IETM_MODE == 'standalone':
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-if os.getenv('SERVE_SPA') == '1':
-    MIDDLEWARE.insert(2, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'ietm_backend.urls'
 
@@ -118,21 +119,18 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = Path(_override_static_root) if _override_static_root else BASE_DIR / 'staticfiles'
 
-STORAGES = {
-    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
-    "staticfiles": {
-        "BACKEND": (
-            "whitenoise.storage.CompressedStaticFilesStorage"
-            if os.getenv('SERVE_SPA') == '1'
-            else "django.contrib.staticfiles.storage.StaticFilesStorage"
-        )
-    },
-}
-
-if os.getenv('SERVE_SPA') == '1':
-    _frontend_root = STATIC_ROOT / 'frontend'
-    if _frontend_root.exists():
-        WHITENOISE_ROOT = str(_frontend_root)
+if IETM_MODE == 'standalone':
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"},
+    }
+    # WhiteNoise serves the React SPA (index.html + assets) from this root
+    WHITENOISE_ROOT = Path(_override_static_root) if _override_static_root else BASE_DIR / 'static' / 'frontend'
+else:
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    }
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(_override_media) if _override_media else BASE_DIR / 'media'
@@ -167,10 +165,4 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
-OLLAMA_BASE_URL    = os.environ.get("OLLAMA_BASE_URL",    "http://localhost:11434")
-OLLAMA_EMBED_MODEL = os.environ.get("OLLAMA_EMBED_MODEL", "nomic-embed-text")
-OLLAMA_CHAT_MODEL  = os.environ.get("OLLAMA_CHAT_MODEL",  "llama3.2")
-CHROMA_PERSIST_DIR = os.environ.get("CHROMA_PERSIST_DIR", str(BASE_DIR / "chroma_db"))
-RAG_TOP_K             = int(os.environ.get("RAG_TOP_K",             "4"))
-RAG_MAX_CONTEXT_CHARS = int(os.environ.get("RAG_MAX_CONTEXT_CHARS", "4000"))
 

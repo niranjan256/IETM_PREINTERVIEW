@@ -8,5 +8,4 @@ class UserActivity(models.Model):
     at = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'user_activity'

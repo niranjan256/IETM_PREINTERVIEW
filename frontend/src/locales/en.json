@@ -13,18 +13,6 @@
     "checklist_off": "Checklist",
     "search_placeholder": "Search in current topic"
   },
-  "chat": {
-    "title": "IETM Assistant",
-    "scope_current": "Current Doc",
-    "scope_all": "All Documents",
-    "placeholder": "Ask about this manual\u2026 (Enter to send)",
-    "clear": "Clear",
-    "sources": "Sources:",
-    "empty": "Ask a question about the technical manual.",
-    "searching_all": "All documents",
-    "searching_doc": "Searching: {{docTitle}}",
-    "no_doc": "No document open"
-  },
   "home": {
     "title": "Documents",
     "open": "Open",

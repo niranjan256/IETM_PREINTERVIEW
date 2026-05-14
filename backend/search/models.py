@@ -7,5 +7,4 @@ class RecentSearch(models.Model):
     at = models.DateTimeField()
 
     class Meta:
-        managed = False
         db_table = 'recent_searches'

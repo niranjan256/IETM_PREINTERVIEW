@@ -24,8 +24,6 @@ _api_patterns = [
     path("api/groups/", include("groups_api.urls")),
     path("api/departments", include("groups_api.urls_dept")),
 
-    path("api/rag/", include("rag.urls")),
-
     path("api/printLogs", views.print_logs, name="print_logs"),
     path("api/model-hotspots/<str:modelName>", views.model_hotspots, name="model_hotspots"),
     path("api/image-hotspots/<str:imageName>", views.image_hotspots, name="image_hotspots"),
